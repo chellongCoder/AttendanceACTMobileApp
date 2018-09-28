@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">ReactNativeSeed</string>
+    <string name="facebook_app_id">242851366412588</string>
+    <string name="fb_login_protocol_scheme">242851366412588</string>
+</resources>

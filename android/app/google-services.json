@@ -1,0 +1,73 @@
+{
+  "project_info": {
+    "project_number": "91025224695",
+    "firebase_url": "https://fbloginwithfirebaseexamp-68b34.firebaseio.com",
+    "project_id": "fbloginwithfirebaseexamp-68b34",
+    "storage_bucket": "fbloginwithfirebaseexamp-68b34.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:91025224695:android:987cb78dfbeb1d3d",
+        "android_client_info": {
+          "package_name": "com.ACTAcademy.fbLoginWithFirebase"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "91025224695-eovabr4tpcql5v0hp1ahbiv17d4s2cf4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA9oBWtsR9CKNOYcwwfJl6Wr6s4ifV7dNE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:91025224695:android:29cc44319e3548e6",
+        "android_client_info": {
+          "package_name": "com.reactnativeseed"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "91025224695-eovabr4tpcql5v0hp1ahbiv17d4s2cf4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA9oBWtsR9CKNOYcwwfJl6Wr6s4ifV7dNE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
