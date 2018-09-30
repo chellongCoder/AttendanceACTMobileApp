@@ -40,19 +40,7 @@ class Home extends React.Component<Props, State> {
           <Right />
         </Header>
         <Content>
-          <List>
-            {this.props.list.map((item, i) => (
-              <ListItem
-                key={i}
-                onPress={() =>
-                  this.props.navigation.navigate("BlankPage", {
-                    name: { item }
-                  })}
-              >
-                <Text>{item}</Text>
-              </ListItem>
-            ))}
-          </List>
+          
         </Content>
       </Container>
     );

@@ -22,15 +22,15 @@ const Drawer = DrawerNavigator(
 );
 
 const App = StackNavigator(
-	{
-		Login: { screen: Login },
-		BlankPage: { screen: BlankPage },
-		Drawer: { screen: Drawer },
-	},
-	{
-		initialRouteName: "Login",
-		headerMode: "none",
-	}
+  {
+    Login: { screen: Login },
+    BlankPage: { screen: BlankPage },
+    Drawer: { screen: Drawer }
+  },
+  {
+    initialRouteName: "Drawer",
+    headerMode: "none"
+  }
 );
 
 export default () => (
