@@ -19,15 +19,15 @@ import {
   GraphRequest,
   GraphRequestManager
 } from "react-native-fbsdk";
-// import firebase from "./../../../configs/firebase";
-import * as firebase from 'react-native-firebase';
+import * as firebase from "react-native-firebase";
 import Auth from "./../../../configs/auth";
 import { fbLoginPermissions } from "./../../../constants";
 //import styles from "./styles";
 export interface Props {
   loginForm: any;
   onLogin: Function;
-  navigation : any;
+  navigation: any;
+  fbLogin : Function;
 }
 export interface State {}
 class Login extends React.Component<Props, State> {
@@ -35,65 +35,47 @@ class Login extends React.Component<Props, State> {
     super(props);
     this.initUser = this.initUser.bind(this);
     this.onPressLoginFB = this.onPressLoginFB.bind(this);
-	this.handleFbLogin = this.handleFbLogin.bind(this);
-	this.handleFbLogout = this.handleFbLogout.bind(this);
-	  this.createUser = this.createUser.bind(this);
-	
-	console.log(firebase);
+    this.handleFbLogout = this.handleFbLogout.bind(this);
+    this.createUser = this.createUser.bind(this);
+	this.asyncLogIn = this.asyncLogIn.bind(this);
+    console.log(firebase);
   }
-  handleFbLogin() {
-    console.log(AccessToken);
-	  AccessToken.getCurrentAccessToken().then(
-		  (data) => {
-
-			  const token = data.accessToken;
-			  fetch('https://graph.facebook.com/v2.8/me?fields=id,picture,first_name,last_name,gender,birthday&access_token=' + token)
-				  .then((response) => response.json())
-				  .then((json) => {
-						console.log('json', json);
-						let self = this;
-					  const imageSize = 120
-					  const facebookID = json.id
-					  const fbImage = `https://graph.facebook.com/${facebookID}/picture?height=${imageSize}`
-					  this.authenticate(data.accessToken)
-						  .then( (result) => {
-							  console.log(result);
-							  if(result) {
-								  this.props.navigation.navigate('Home');
-							  }
-							  const { uid } = result.user;
-							  console.log('uid', uid);
-							//   self.createUser(uid, json, token, fbImage);
-						  })
-
-
-				  })
-				  .catch(function (err) {
-					  console.log(err);
-				  });
-		  }
-	  )
-  }
-	createUser (uid, userData, token, dp) {
-		const defaults = {
-			uid,
-			token,
-			dp,
-			ageRange: [20, 30]
-		}
-		firebase.database().ref('users').child(uid).update({ ...userData, ...defaults })
-	}
-
-	handleFbLogout() {
-		LoginManager.logout();
-	}
   
-	authenticate = (token) => {
-		const provider = firebase.auth.FacebookAuthProvider
-		const credential = provider.credential(token)
-		let ret =  firebase.auth().signInWithCredential(credential)
-		return ret;
-	}
+  async asyncLogIn(): Promise<Action> {
+	  console.log('login');
+    const response = await fetch('http://localhost:8080/api/ext/getAllStudent', {
+      body: JSON.stringify({ username: "email", password : "passowrd" }),
+      headers: {
+        Accept: "application/json",
+        "cache-control": "no-cache",
+        "Content-type": "application/json"
+      },
+      method: "POST"
+    }).catch(error => {
+      console.log(error);
+    });
+    const data = await response.json();
+    console.log(data);
+  }
+  createUser(uid, userData, token, dp) {
+    const defaults = {
+      uid,
+      token,
+      dp,
+      ageRange: [20, 30]
+    };
+    firebase
+      .database()
+      .ref("users")
+      .child(uid)
+      .update({ ...userData, ...defaults });
+  }
+
+  handleFbLogout() {
+    LoginManager.logout();
+  }
+
+  
   onPressLoginFB() {
     AccessToken.getCurrentAccessToken().then(data => {
       console.log(data);
@@ -142,68 +124,60 @@ class Login extends React.Component<Props, State> {
   }
 
   render() {
-    return (
-      <Container>
+    return <Container>
         <Header style={{ height: 200 }}>
           <Body style={{ alignItems: "center" }}>
             <Icon name="flash" style={{ fontSize: 104 }} />
             <Title>ReactNativeSeed</Title>
             <View padder>
-              <Text
-                style={{ color: Platform.OS === "ios" ? "#000" : "#FFF" }}
-              />
+              <Text style={{ color: Platform.OS === "ios" ? "#000" : "#FFF" }} />
             </View>
           </Body>
         </Header>
         <Content>
           {this.props.loginForm}
           <View padder>
-            <Button block onPress={() => this.props.onLogin()}>
+            <Button block onPress={() => {
+                // this.props.onLogin()
+                this.asyncLogIn().then(result => {
+                  console.log("result ", result);
+                });
+              }}>
               <Text>Login</Text>
             </Button>
           </View>
           <View padder>
-            <LoginButton
-              readPermissions={["public_profile"]}
-              onLoginFinished={(error, result) => {
+            <LoginButton readPermissions={["public_profile"]} onLoginFinished={(error, result) => {
                 if (error) {
                   console("login has error: " + result);
                 } else if (result.isCancelled) {
                   Alert.alert("login is cancelled.");
                 } else {
                   AccessToken.getCurrentAccessToken().then(data => {
-					let {accessToken} =  data ;
-					console.log('accessToken1', accessToken);
-					this.initUser(accessToken);
-                    console.log('data', data);
+                    let { accessToken } = data;
+                    console.log("accessToken1", accessToken);
+                    this.initUser(accessToken);
+                    console.log("data", data);
                   });
                 }
-              }}
-              onLogoutFinished={() => console.log("logout.")}
-			/>
-            <Button onPress={this.handleFbLogin}>
+              }} onLogoutFinished={() => console.log("logout.")} />
+          <Button onPress={() => this.props.fbLogin()}>
               <Text>Login fb</Text>
             </Button>
-			<Button onPress={this.handleFbLogout}>
-              <Text>Logout fb</Text>
+            <Button onPress={this.handleFbLogout}>
+              <Text>Logo</Text>
             </Button>
           </View>
         </Content>
         <Footer style={{ backgroundColor: "#F8F8F8" }}>
-          <View
-            style={{ alignItems: "center", opacity: 0.5, flexDirection: "row" }}
-          >
+          <View style={{ alignItems: "center", opacity: 0.5, flexDirection: "row" }}>
             <View padder>
               <Text style={{ color: "#000" }}>Made with love at </Text>
             </View>
-            <Image
-              source={{ uri: "https://geekyants.com/images/logo-dark.png" }}
-              style={{ width: 422 / 4, height: 86 / 4 }}
-            />
+            <Image source={{ uri: "https://geekyants.com/images/logo-dark.png" }} style={{ width: 422 / 4, height: 86 / 4 }} />
           </View>
         </Footer>
-      </Container>
-    );
+      </Container>;
   }
 }
 
