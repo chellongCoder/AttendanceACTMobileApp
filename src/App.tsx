@@ -28,7 +28,7 @@ const App = StackNavigator(
     Drawer: { screen: Drawer }
   },
   {
-    initialRouteName: "Drawer",
+    initialRouteName: "Login",
     headerMode: "none"
   }
 );
