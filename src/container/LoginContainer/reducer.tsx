@@ -26,5 +26,11 @@ export default function (state:State = initialState, action) {
             isLoading: action.isLoading,
         };
     }
+    if(action.type === "RESET_ACCOUNT_FACEBOOK") {
+        return {
+            ...state,
+            accountFacebook : {}
+        }
+    }
     return state;
 }
