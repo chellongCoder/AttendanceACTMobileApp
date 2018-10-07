@@ -9,6 +9,7 @@ import Login from "./container/LoginContainer";
 import Home from "./container/HomeContainer";
 import BlankPage from "./container/BlankPageContainer";
 import Sidebar from "./container/SidebarContainer";
+import StudentList from './container/StudentListContainer';
 
 const Drawer = DrawerNavigator(
 	{
@@ -25,10 +26,11 @@ const App = StackNavigator(
   {
     Login: { screen: Login },
     BlankPage: { screen: BlankPage },
-    Drawer: { screen: Drawer }
+    Drawer: { screen: Drawer },
+    StudentList: { screen: StudentList }
   },
   {
-    initialRouteName: "Login",
+		initialRouteName: "Login",
     headerMode: "none"
   }
 );

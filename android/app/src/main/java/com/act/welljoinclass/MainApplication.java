@@ -1,4 +1,4 @@
-package com.reactnativeseed;
+package com.act.welljoinclass;
 
 import android.app.Application;
 

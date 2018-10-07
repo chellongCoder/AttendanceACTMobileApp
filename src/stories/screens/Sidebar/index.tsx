@@ -42,7 +42,6 @@ export default class Sidebar extends React.Component<Props, State> {
 		this.LogoutFB = this.LogoutFB.bind(this);
 	}
 	LogoutFB() {
-		
 		LoginManager.logOut();
 		this.props.resetAccountFB();
 		this.props.navigation.dispatch(resetAction);

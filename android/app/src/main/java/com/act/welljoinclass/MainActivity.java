@@ -1,4 +1,4 @@
-package com.reactnativeseed;
+package com.act.welljoinclass;
 
 import android.content.Intent;
 
@@ -12,7 +12,7 @@ public class MainActivity extends ReactActivity {
      */
     @Override
     protected String getMainComponentName() {
-        return "ReactNativeSeed";
+        return "ACTWelljoinedClass";
     }
     
     @Override

@@ -1,3 +1,4 @@
+import CONSTANT from "../../Common/app_constant";
 
 export type State = {
     account : Object,
@@ -14,10 +15,10 @@ const initialState = {
 };
 
 export default function (state:State = initialState, action) {
-    if (action.type === "SAVE_ACCOUNT_FB") {
+    if (action.type === CONSTANT.SAVE_ACCOUNT_FB) {
         return {
             ...state,
-            accountFacebook: action.accountFacebook,
+            accountFacebook: action.account,
         };
     }
     if (action.type === "LIST_IS_LOADING") {
