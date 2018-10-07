@@ -20,6 +20,7 @@ export interface Props {
 export interface State {}
 
 class StudentListContainer extends Component<Props, State> {
+    listStudent
     constructor(props){
         super(props);
         this.state = {

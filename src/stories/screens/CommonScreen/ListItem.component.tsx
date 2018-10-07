@@ -5,6 +5,7 @@ export interface Props {
   navigation: any;
   student: Course;
   selectedItem: Function;
+  key? : number;
 }
 export interface State { 
     selected : boolean;
@@ -25,6 +26,7 @@ export default class ListItemComponent extends Component<Props, State> {
     render() {
         return (
             <ListItem
+            key={this.props.key}
             onPress={()=>this.onPress(this.props.student)}
                 selected={this.state.selected}
             >

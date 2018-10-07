@@ -4,8 +4,9 @@ import { Field, reduxForm } from "redux-form";
 import Login from "../../stories/screens/Login";
 import { AccessToken, LoginManager } from "react-native-fbsdk";
 import * as firebase from "react-native-firebase";
-import { saveAccountFB } from "./actions";
+import { saveAccountFB, fetchListStudentByCourseId } from "./actions";
 import { connect } from "react-redux";
+import { API } from "../../Common/config";
 const required = value => (value ? undefined : "Required");
 const maxLength = max => value => value && value.length > max ? `Must be ${max} characters or less` : undefined;
 const maxLength15 = maxLength(15);
@@ -51,6 +52,14 @@ class LoginForm extends React.Component {
                 // {...input}
                 defaultValue: "sdasd", ref: c => (this.textInput = c), placeholder: input.name === "email" ? "Email" : "Password", secureTextEntry: input.name === "password" ? true : false })));
     }
+    componentDidMount() {
+        setTimeout(() => {
+            console.log("length", Object.keys(this.props.accountFacebook).length);
+            if (Object.keys(this.props.accountFacebook).length !== 0) {
+                this.props.navigation.navigate("Home");
+            }
+        }, 0);
+    }
     handleFbLogin() {
         console.log("login");
         LoginManager.logInWithReadPermissions(["public_profile", "email"]).then(result => {
@@ -72,7 +81,9 @@ class LoginForm extends React.Component {
                         const fbImage = `https://graph.facebook.com/${facebookID}/picture?height=${imageSize}`;
                         this.authenticate(data.accessToken).then(result => {
                             console.log(result);
-                            this.props.saveAccountFB(result);
+                            if (Object.keys(this.props.accountFacebook).length === 0) {
+                                this.props.fetchListStudentByCourseId(API.insertStudent, result);
+                            }
                             if (result) {
                                 this.props.navigation.navigate("Home");
                             }
@@ -112,14 +123,16 @@ class LoginForm extends React.Component {
 }
 function bindAction(dispatch) {
     return {
-        saveAccountFB: account => dispatch(saveAccountFB(account))
+        saveAccountFB: account => dispatch(saveAccountFB(account)),
+        fetchListStudentByCourseId: (url, account) => dispatch(fetchListStudentByCourseId(url, account))
     };
 }
 function mapStateToProps(store) {
-    return {};
+    return {
+        accountFacebook: store.loginReducer.accountFacebook
+    };
 }
-const LoginContainer = reduxForm({
+export default connect(mapStateToProps, bindAction)(reduxForm({
     form: "login"
-})(LoginForm);
-export default connect(mapStateToProps, bindAction)(LoginContainer);
+})(LoginForm));
 //# sourceMappingURL=index.js.map

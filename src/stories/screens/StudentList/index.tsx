@@ -32,7 +32,8 @@ export default class StudentListScreen extends Component<Props, State> {
 
     renderItemStudent(value, index) {
         return (
-            <ListItemComponent 
+            <ListItemComponent
+            key={index} 
             selectedItem={this.props.selectedItem}
             student={value}
             navigation={this.props.navigation}/>

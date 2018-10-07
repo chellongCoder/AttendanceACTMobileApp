@@ -10,8 +10,9 @@ import {
   GraphRequestManager
 } from "react-native-fbsdk";
 import * as firebase from "react-native-firebase";
-import { saveAccountFB } from "./actions";
+import { saveAccountFB, fetchListStudentByCourseId} from "./actions";
 import { connect } from "react-redux";
+import { API } from "../../Common/config";
 
 const required = value => (value ? undefined : "Required");
 const maxLength = max => value =>
@@ -33,6 +34,8 @@ export interface Props {
   navigation: any;
   valid: boolean;
   saveAccountFB: Function;
+  fetchListStudentByCourseId: Function;
+  accountFacebook : Object;
 }
 export interface State {
   username: string;
@@ -74,7 +77,14 @@ class LoginForm extends React.Component<Props, State> {
       </Item>
     );
   }
-
+componentDidMount() {
+  setTimeout(() => {
+    console.log("length", Object.keys(this.props.accountFacebook).length);
+    if (Object.keys(this.props.accountFacebook).length !== 0) {
+      this.props.navigation.navigate("Home");
+    } 
+  }, 100);
+}
   handleFbLogin() {
     console.log("login");
     LoginManager.logInWithReadPermissions(["public_profile", "email"]).then(
@@ -100,7 +110,9 @@ class LoginForm extends React.Component<Props, State> {
                 const fbImage = `https://graph.facebook.com/${facebookID}/picture?height=${imageSize}`;
                 this.authenticate(data.accessToken).then(result => {
                   console.log(result);
-                  this.props.saveAccountFB(result);
+                  if (Object.keys(this.props.accountFacebook).length===0) {
+                    this.props.fetchListStudentByCourseId(API.insertStudent, result);
+                  } 
                   if (result) {
                     this.props.navigation.navigate("Home");
                   }
@@ -170,17 +182,22 @@ class LoginForm extends React.Component<Props, State> {
 
 function bindAction(dispatch) {
   return {
-    saveAccountFB: account => dispatch(saveAccountFB(account))
+    saveAccountFB: account => dispatch(saveAccountFB(account)),
+    fetchListStudentByCourseId: (url, account) => dispatch(fetchListStudentByCourseId(url, account))
   };
 }
 function mapStateToProps(store) {
-  return {};
+  return {
+    accountFacebook : store.loginReducer.accountFacebook
+  };
 }
-const LoginContainer = reduxForm({
-  form: "login"
-})(LoginForm);
+
 
 export default connect(
   mapStateToProps,
   bindAction
-)(LoginContainer);
+)(
+  reduxForm({
+    form: "login"
+  })(LoginForm)
+);

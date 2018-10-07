@@ -13,14 +13,17 @@ import {
   List,
   ListItem,
   View,
-  
+  Picker,
+  Form
 } from "native-base";
 import AwesomeButton from 'react-native-really-awesome-button';
-import { Image, ImageBackground} from 'react-native';
+import { Image, ImageBackground, TouchableOpacity } from "react-native";
 import styles from "./styles";
 import platform from './../../../theme/variables/platform';
 import CommonColor from './../../../theme/variables/commonColor';
-
+import Modal from "react-native-modal";
+import commonColor from "./../../../theme/variables/commonColor";
+ import ModalContainer from './../../../container/CoursesCotainer';
 export interface Props {
   navigation: any;
   list: any;
@@ -29,9 +32,7 @@ export interface State {
   loading: boolean;
   text: any;
   blur : number;
-  flag : boolean;
-  blurUp: number;
-  blurDown : number;
+  isVisibleModal : boolean;
 }
 class Home extends React.Component<Props, State> {
   interval : any;
@@ -41,9 +42,7 @@ class Home extends React.Component<Props, State> {
       loading : true,
       text : "click",
       blur : 0,
-      flag : true,
-      blurUp : 0,
-      blurDown : 0,
+      isVisibleModal : false,
     }
     this.interval = setInterval(() => {
       this.setState({ blur: this.state.blur + 1 });
@@ -51,10 +50,15 @@ class Home extends React.Component<Props, State> {
         this.setState({ blur: 0 });
       }
     }, 300);
-    this.props.navigation.navigate("DrawerOpen");
+    this._toggleModal = this._toggleModal.bind(this);
   }
   componentDidMount() {
     
+  }
+  _toggleModal() {
+    this.setState({
+      isVisibleModal : !this.state.isVisibleModal
+    })
   }
   render() {
 
@@ -75,13 +79,18 @@ class Home extends React.Component<Props, State> {
           </Body>
           <Right />
         </Header>
+        <ModalContainer 
+        _toggleModal={this._toggleModal}
+        isVisibleModal={this.state.isVisibleModal}
+        navigation={this.props.navigation}/>
         <ImageBackground 
           blurRadius={this.state.blur}
           style={{
-            
-            width: platform.deviceWidth,
-            height: platform.deviceHeight,}}
+            width : '100%',
+            height : '100%',  
+          }}
         source={require('./../../../../assets/java_background.jpg')}>
+          
         <View style={{flex : 1, justifyContent : 'center', alignItems : 'center', position : 'absolute', left : platform.deviceWidth/2-50, top : platform.deviceHeight/2-80}}>
           <AwesomeButton
           style={{ }}
@@ -100,11 +109,12 @@ class Home extends React.Component<Props, State> {
             textSize={30}
             onPress={(next) => {
               /** Do Something **/
+              this._toggleModal();
               setTimeout(() => {
                 this.setState({text: "ok", blur : 0});
                 clearInterval(this.interval);
                 next()
-              }, 3000);
+              }, 1000);
             }}
           >{this.state.text}</AwesomeButton>
         </View>
