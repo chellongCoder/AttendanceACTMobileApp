@@ -17,10 +17,10 @@ const Drawer = DrawerNavigator({
 const App = StackNavigator({
     Login: { screen: Login },
     BlankPage: { screen: BlankPage },
-    Drawer: { screen: Drawer },
+    Drawer: { screen: Drawer }
 }, {
     initialRouteName: "Login",
-    headerMode: "none",
+    headerMode: "none"
 });
 export default () => (React.createElement(Root, null,
     React.createElement(App, null)));
