@@ -7,6 +7,7 @@ import Login from "./container/LoginContainer";
 import Home from "./container/HomeContainer";
 import BlankPage from "./container/BlankPageContainer";
 import Sidebar from "./container/SidebarContainer";
+import StudentList from './container/StudentListContainer';
 const Drawer = DrawerNavigator({
     Home: { screen: Home },
 }, {
@@ -18,9 +19,10 @@ const App = StackNavigator({
     Login: { screen: Login },
     BlankPage: { screen: BlankPage },
     Drawer: { screen: Drawer },
+    StudentList: { screen: StudentList }
 }, {
     initialRouteName: "Login",
-    headerMode: "none",
+    headerMode: "none"
 });
 export default () => (React.createElement(Root, null,
     React.createElement(App, null)));

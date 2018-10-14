@@ -1,7 +1,7 @@
 import * as React from "react";
 import Sidebar from "../../stories/screens/Sidebar";
 import { connect } from 'react-redux'
-
+import {resetAccountFB} from './actions';
 export type Object = {
 	email : string;
 	displayName : string;
@@ -10,15 +10,16 @@ export type Object = {
 export interface Props {
 	navigation: any;
 	user : Object
+	resetAccountFB : Function;
 }
 export interface State {}
 class SidebarContainer extends React.Component<Props, State> {
 	constructor(props) {
 		super(props);
-		console.log("url", this.props.user.photoURL);
 	}
 	render() {
 		return <Sidebar
+		resetAccountFB={this.props.resetAccountFB}
 		user={this.props.user}
 		navigation={this.props.navigation} />;
 	}
@@ -27,6 +28,7 @@ class SidebarContainer extends React.Component<Props, State> {
 
 function bindAction(dispatch) {
 	return {
+		resetAccountFB :() => dispatch(resetAccountFB())
 	}
 }
 function mapStateToProps(store) {

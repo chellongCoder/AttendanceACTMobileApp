@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Item, Input, Icon, Form, Toast } from "native-base";
+import { Item, Input, Icon, Form, Toast, View, Text } from "native-base";
 import { Field, reduxForm } from "redux-form";
 import Login from "../../stories/screens/Login";
 import {
@@ -10,8 +10,13 @@ import {
   GraphRequestManager
 } from "react-native-fbsdk";
 import * as firebase from "react-native-firebase";
-import { saveAccountFB } from "./actions";
+import { saveAccountFB, fetchListStudentByCourseId, getAccountAdmin} from "./actions";
 import { connect } from "react-redux";
+import { API } from "../../Common/config";
+import styles from "../../stories/screens/Login/styles";
+import { StyleSheet } from "react-native";
+import app_constant from "../../Common/app_constant";
+import { Admin } from "./interface";
 
 const required = value => (value ? undefined : "Required");
 const maxLength = max => value =>
@@ -33,6 +38,10 @@ export interface Props {
   navigation: any;
   valid: boolean;
   saveAccountFB: Function;
+  fetchListStudentByCourseId: Function;
+  accountFacebook: Object;
+  getAccountAdmin : Function;
+  accountAdmin : Admin;
 }
 export interface State {
   username: string;
@@ -44,10 +53,8 @@ class LoginForm extends React.Component<Props, State> {
   password : string;
   constructor(props) {
     super(props);
-    this.state = {
-      username: "",
-      password: ""
-    };
+    this.username = "";
+    this.password = "";
 	this.handleFbLogin = this.handleFbLogin.bind(this);
 	  this.renderInput = this.renderInput.bind(this);
   }
@@ -59,14 +66,13 @@ class LoginForm extends React.Component<Props, State> {
           // onChangeText
           onChangeText={text => {
             if (input.name === "email") {
-			  this.username = text;
+			        this.username = text;
             } else {
              this.password = text;
             }
 		  }}
 		  onBlur={()=>{console.log('username', this.username, 'password', this.password)}}
           // {...input}
-          defaultValue="sdasd"
           ref={c => (this.textInput = c)}
           placeholder={input.name === "email" ? "Email" : "Password"}
           secureTextEntry={input.name === "password" ? true : false}
@@ -74,7 +80,17 @@ class LoginForm extends React.Component<Props, State> {
       </Item>
     );
   }
-
+componentDidMount() {
+  setTimeout(() => {
+    console.log("length", Object.keys(this.props.accountFacebook).length);
+    if (Object.keys(this.props.accountFacebook).length !== 0) {
+      this.props.navigation.navigate("Home");
+    } 
+    if(this.props.accountAdmin.username!=="") {
+      this.props.navigation.navigate("Drawer");
+    }
+  }, 100);
+}
   handleFbLogin() {
     console.log("login");
     LoginManager.logInWithReadPermissions(["public_profile", "email"]).then(
@@ -100,7 +116,9 @@ class LoginForm extends React.Component<Props, State> {
                 const fbImage = `https://graph.facebook.com/${facebookID}/picture?height=${imageSize}`;
                 this.authenticate(data.accessToken).then(result => {
                   console.log(result);
-                  this.props.saveAccountFB(result);
+                  if (Object.keys(this.props.accountFacebook).length===0) {
+                    this.props.fetchListStudentByCourseId(API.insertStudent, result);
+                  } 
                   if (result) {
                     this.props.navigation.navigate("Home");
                   }
@@ -128,9 +146,26 @@ class LoginForm extends React.Component<Props, State> {
     return ret;
   };
 
-  login() {
-	  this.props.navigation.navigate("Drawer");
-    // if (this.username==='longnn@ows.com.vn' && this.password==='longvip98') {
+  async login() {
+    let account = {
+      username : this.username.toLocaleLowerCase(),
+      password : this.password.toLocaleLowerCase(),
+    }
+
+    console.log(account);
+    const result = await this.props.getAccountAdmin(account, API.getUserAdmin);
+    console.log('result', result);
+    if(result[0].type===app_constant.LOGIN.GET_ACCOUT_ADMIN_SUSCESS) {
+      this.props.navigation.navigate("Drawer");
+    } else {
+      Toast.show({
+        text: "Enter Valid Username & password!",
+        duration: 2000,
+        position: "top",
+        textStyle: { textAlign: "center" }
+      });
+    }
+    // if (this.props.getAccountAdmin(account, API.getUserAdmin)) {
     //   this.props.navigation.navigate("Drawer");
     // } else {
     //   Toast.show({
@@ -170,17 +205,25 @@ class LoginForm extends React.Component<Props, State> {
 
 function bindAction(dispatch) {
   return {
-    saveAccountFB: account => dispatch(saveAccountFB(account))
+    saveAccountFB: account => dispatch(saveAccountFB(account)),
+    fetchListStudentByCourseId: (url, account) => dispatch(fetchListStudentByCourseId(url, account)),
+    getAccountAdmin : (account, url) => dispatch(getAccountAdmin(account,url)),
   };
 }
 function mapStateToProps(store) {
-  return {};
+  return {
+    accountFacebook : store.loginReducer.accountFacebook,
+    accountAdmin : store.loginReducer.accountAdmin,
+  };
 }
-const LoginContainer = reduxForm({
-  form: "login"
-})(LoginForm);
+
 
 export default connect(
   mapStateToProps,
   bindAction
-)(LoginContainer);
+)(
+  reduxForm({
+    form: "login"
+  })(LoginForm)
+);
+

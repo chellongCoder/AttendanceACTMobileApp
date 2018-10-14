@@ -24,6 +24,8 @@ function bindAction(dispatch) {
 	};
 }
 
+
+
 const mapStateToProps = state => ({
 	data: state.homeReducer.list,
 	isLoading: state.homeReducer.isLoading,
