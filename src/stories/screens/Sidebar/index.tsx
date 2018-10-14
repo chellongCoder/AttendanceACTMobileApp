@@ -12,18 +12,22 @@ import {
 	GraphRequestManager
 } from "react-native-fbsdk";
 const routes = [
-	{
-		route: "Home",
-		caption: "Home",
-	},
-	{
-		route: "BlankPage",
-		caption: "Infomation user",
-	},
-	{
-		route: "Login",
-		caption: "Logout",
-	},
+  {
+    route: "Home",
+    caption: "Home"
+  },
+  {
+    route: "BlankPage",
+    caption: "Infomation user"
+  },
+  {
+    route: "Login",
+    caption: "Logout"
+  },
+  {
+    route: "Courses",
+    caption: "All Courses"
+  }
 ];
 
 export interface Props {
@@ -54,7 +58,7 @@ export default class Sidebar extends React.Component<Props, State> {
         <Header style={{ height: 200, backgroundColor: commonColor.brandPrimary, flexDirection: "column", alignItems: "center" }}>
           {this.props.user ? <Image style={{ borderRadius: 50, width: 100, height: 100 }} source={{ uri: this.props.user.photoURL }} /> : <Image style={{ width: 100, height: 100 }} source={require("./../../../../assets/incognito_avatar.png")} />}
           <Title style={{ color: commonColor.topTabBarActiveTextColor }}>
-            {this.props.user && this.props.user.displayName}
+            {this.props.user ? this.props.user.displayName : "Admin"}
           </Title>
           <Text>{this.props.user && this.props.user.email}</Text>
         </Header>

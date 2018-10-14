@@ -10,7 +10,7 @@ import Home from "./container/HomeContainer";
 import BlankPage from "./container/BlankPageContainer";
 import Sidebar from "./container/SidebarContainer";
 import StudentList from './container/StudentListContainer';
-
+import CoursesContainer from './container/CoursesCotainer';
 const Drawer = DrawerNavigator(
 	{
 		Home: { screen: Home },
@@ -27,7 +27,9 @@ const App = StackNavigator(
     Login: { screen: Login },
     BlankPage: { screen: BlankPage },
     Drawer: { screen: Drawer },
-    StudentList: { screen: StudentList }
+		StudentList: { screen: StudentList },
+		Courses: { screen: CoursesContainer},
+
   },
   {
 		initialRouteName: "Login",

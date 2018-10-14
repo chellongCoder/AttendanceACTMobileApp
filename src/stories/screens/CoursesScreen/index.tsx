@@ -16,7 +16,8 @@ import {
     Picker,
     Form,
     Spinner
-} from "native-base";import Modal from "react-native-modal";
+} from "native-base";
+import Modal from "react-native-modal";
 import commonColor from "./../../../theme/variables/commonColor";
 export interface Props {
   navigation: any;

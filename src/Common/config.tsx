@@ -1,7 +1,8 @@
   export const API = {
-    getListCourse: "http://localhost:8080/api/ext/getAllCourses",
-    getStudentByCourseId: "http://localhost:8080/api/ext/StudentByIdCourse",
-    insertStudent: "http://localhost:8080/api/ext/INSERTSTUDENT",
+    getListCourse: "http://125.212.227.42:48080/api/ext/getAllCourses",
+    getStudentByCourseId: "http://125.212.227.42:48080/api/ext/StudentByIdCourse",
+    insertStudent: "http://125.212.227.42:48080/api/ext/INSERTSTUDENT",
+    getUserAdmin: "http://125.212.227.42:48080/api/ext/getAdminUser",
   }
   
   export const environment = {

@@ -20,20 +20,27 @@ export interface Props {
 export interface State {}
 
 class StudentListContainer extends Component<Props, State> {
-    listStudent
+    listStudent : Array<{}>;
     constructor(props){
         super(props);
         this.state = {
 
         }
+        this.listStudent = [];
         this.selectedItem = this.selectedItem.bind(this);
+        this.submitStudentInClass = this.submitStudentInClass.bind(this);
     }
     selectedItem(student) {
         console.log('student', student);
+        this.listStudent.push(student);
+    }
+    submitStudentInClass() {
+      console.log('student list', this.listStudent);
     }
   render() {
     return (
       <StudentListScreen
+        submitStudentInClass= {this.submitStudentInClass}
         selectedItem={this.selectedItem}
         listStudentByCourses={this.props.listStudentByCourses}
         navigation={this.props.navigation}

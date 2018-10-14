@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Item, Input, Icon, Form, Toast } from "native-base";
+import { Item, Input, Icon, Form, Toast, View, Text } from "native-base";
 import { Field, reduxForm } from "redux-form";
 import Login from "../../stories/screens/Login";
 import {
@@ -10,9 +10,13 @@ import {
   GraphRequestManager
 } from "react-native-fbsdk";
 import * as firebase from "react-native-firebase";
-import { saveAccountFB, fetchListStudentByCourseId} from "./actions";
+import { saveAccountFB, fetchListStudentByCourseId, getAccountAdmin} from "./actions";
 import { connect } from "react-redux";
 import { API } from "../../Common/config";
+import styles from "../../stories/screens/Login/styles";
+import { StyleSheet } from "react-native";
+import app_constant from "../../Common/app_constant";
+import { Admin } from "./interface";
 
 const required = value => (value ? undefined : "Required");
 const maxLength = max => value =>
@@ -35,7 +39,9 @@ export interface Props {
   valid: boolean;
   saveAccountFB: Function;
   fetchListStudentByCourseId: Function;
-  accountFacebook : Object;
+  accountFacebook: Object;
+  getAccountAdmin : Function;
+  accountAdmin : Admin;
 }
 export interface State {
   username: string;
@@ -47,10 +53,8 @@ class LoginForm extends React.Component<Props, State> {
   password : string;
   constructor(props) {
     super(props);
-    this.state = {
-      username: "",
-      password: ""
-    };
+    this.username = "";
+    this.password = "";
 	this.handleFbLogin = this.handleFbLogin.bind(this);
 	  this.renderInput = this.renderInput.bind(this);
   }
@@ -62,14 +66,13 @@ class LoginForm extends React.Component<Props, State> {
           // onChangeText
           onChangeText={text => {
             if (input.name === "email") {
-			  this.username = text;
+			        this.username = text;
             } else {
              this.password = text;
             }
 		  }}
 		  onBlur={()=>{console.log('username', this.username, 'password', this.password)}}
           // {...input}
-          defaultValue="sdasd"
           ref={c => (this.textInput = c)}
           placeholder={input.name === "email" ? "Email" : "Password"}
           secureTextEntry={input.name === "password" ? true : false}
@@ -83,6 +86,9 @@ componentDidMount() {
     if (Object.keys(this.props.accountFacebook).length !== 0) {
       this.props.navigation.navigate("Home");
     } 
+    if(this.props.accountAdmin.username!=="") {
+      this.props.navigation.navigate("Drawer");
+    }
   }, 100);
 }
   handleFbLogin() {
@@ -140,9 +146,26 @@ componentDidMount() {
     return ret;
   };
 
-  login() {
-	  this.props.navigation.navigate("Drawer");
-    // if (this.username==='longnn@ows.com.vn' && this.password==='longvip98') {
+  async login() {
+    let account = {
+      username : this.username.toLocaleLowerCase(),
+      password : this.password.toLocaleLowerCase(),
+    }
+
+    console.log(account);
+    const result = await this.props.getAccountAdmin(account, API.getUserAdmin);
+    console.log('result', result);
+    if(result[0].type===app_constant.LOGIN.GET_ACCOUT_ADMIN_SUSCESS) {
+      this.props.navigation.navigate("Drawer");
+    } else {
+      Toast.show({
+        text: "Enter Valid Username & password!",
+        duration: 2000,
+        position: "top",
+        textStyle: { textAlign: "center" }
+      });
+    }
+    // if (this.props.getAccountAdmin(account, API.getUserAdmin)) {
     //   this.props.navigation.navigate("Drawer");
     // } else {
     //   Toast.show({
@@ -183,12 +206,14 @@ componentDidMount() {
 function bindAction(dispatch) {
   return {
     saveAccountFB: account => dispatch(saveAccountFB(account)),
-    fetchListStudentByCourseId: (url, account) => dispatch(fetchListStudentByCourseId(url, account))
+    fetchListStudentByCourseId: (url, account) => dispatch(fetchListStudentByCourseId(url, account)),
+    getAccountAdmin : (account, url) => dispatch(getAccountAdmin(account,url)),
   };
 }
 function mapStateToProps(store) {
   return {
-    accountFacebook : store.loginReducer.accountFacebook
+    accountFacebook : store.loginReducer.accountFacebook,
+    accountAdmin : store.loginReducer.accountAdmin,
   };
 }
 
@@ -201,3 +226,4 @@ export default connect(
     form: "login"
   })(LoginForm)
 );
+
