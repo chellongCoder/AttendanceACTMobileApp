@@ -36,7 +36,7 @@ function bindAction(dispatch) {
 }
 function mapStateToProps(store) {
     return {
-        selectedCourse: store.courseReducer.selec
+        selectedCourse: store.attendanceReducer.selec
     };
 }
 export default connect(

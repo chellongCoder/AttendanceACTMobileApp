@@ -23,11 +23,7 @@ export default class Setup extends React.Component<Props, State> {
       })
     };
   }
-  componentDidMount () {
-    if(!this.state.store) {
-      this.setState({isLoading : true});
-    }
-  }
+
   
   render() {
     console.log(this.state.isLoading);
