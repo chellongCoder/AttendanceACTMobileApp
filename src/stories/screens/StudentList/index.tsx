@@ -15,10 +15,12 @@ import {
   Button
 } from "native-base";
 import ListItemComponent from './../CommonScreen/ListItem.component';
+import LessonScreenContainer from './../../../container/LessonContainer';
 export interface Props {
   navigation: any;
   listStudentByCourses : Array<{}>;
-  selectedItem : Function
+  selectedItem : Function;
+  submitStudentInClass : Function;
 }
 export interface State {
 }
@@ -70,10 +72,10 @@ export default class StudentListScreen extends Component<Props, State> {
                         })
                     }
                 </List>
-
+                <LessonScreenContainer navigation={this.props.navigation}/>
           </Content>
           <Footer>
-              <Button>
+              <Button onPress={()=>this.props.submitStudentInClass()}>
                   <Text>click</Text>
               </Button>
           </Footer>
