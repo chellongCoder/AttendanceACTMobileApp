@@ -10,10 +10,15 @@ export interface Props {
 }
 export interface State {}
 class HomeContainer extends React.Component<Props, State> {
+	constructor(props) {
+		super(props);
+		console.log('data', this.props.data);
+	}
 	componentDidMount() {
 		this.props.fetchList(datas);
 	}
 	render() {
+		console.log('redeer', this.props.data);
 		return <Home navigation={this.props.navigation} list={this.props.data} />;
 	}
 }

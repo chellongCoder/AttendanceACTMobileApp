@@ -12,6 +12,8 @@ import Sidebar from "./container/SidebarContainer";
 import StudentList from './container/StudentListContainer';
 import CoursesContainer from './container/CoursesContainer';
 import AttendanceContainer from './container/AttendanceContainer'
+import LessonContainer from './container/LessonContainer';
+import { NavigationService } from "./Services/NavigationService";
 const Drawer = DrawerNavigator(
 	{
 		Home: { screen: Home },
@@ -30,16 +32,21 @@ const App = StackNavigator(
     Drawer: { screen: Drawer },
     StudentList: { screen: StudentList },
     Courses: { screen: CoursesContainer },
-    Attendance: { screen: AttendanceContainer }
+    Attendance: { screen: AttendanceContainer },
+    Lesson: { screen: LessonContainer }
   },
   {
-    initialRouteName: "Drawer",
+    initialRouteName: "Login",
     headerMode: "none"
   }
 );
 
 export default () => (
 	<Root>
-		<App />
+		<App 
+      ref={(navigatorRef) => {
+        NavigationService.setTopLevelNavigator(navigatorRef);
+      }}
+    />
 	</Root>
 );

@@ -64,6 +64,7 @@
     "react-native-facebook-login": "^1.6.1",
     "react-native-fbsdk": "^0.8.0",
     "react-native-firebase": "^5.0.0",
+    "react-native-loading-spinner-overlay": "^1.0.1",
     "react-native-material-cards": "^1.0.9",
     "react-native-modal": "^6.5.0",
     "react-native-really-awesome-button": "^0.8.3",
