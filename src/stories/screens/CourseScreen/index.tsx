@@ -9,29 +9,36 @@ import { Course } from "../../../container/CoursesContainer/interface";
 import HeaderComponent from "../../../component/HeaderComponent";
 import { CourseName } from "../../../Common/config";
 import commonStyles from "../../../theme/variables/commonStyles";
+import { connect } from "react-redux";
+import Spinner from 'react-native-loading-spinner-overlay';
 export interface Props {
   navigation: any;
   data: Array<Course>;
-  getLessonByCourseId : Function;
+  getLessonByCourseId: Function;
+  isLoading : boolean;
 }
 export interface State {}
 export class CourseScreen extends Component<Props, State> {
   constructor(props) {
     super(props);
-    this.onPressItem = this.onPressItem.bind(this);    
+    this.onPressItem = this.onPressItem.bind(this);
   }
-  onPressItem() {
-
-  }
+  onPressItem() {}
   renderCard(value: Course, index) {
     let img = null;
     if (value.courseName.toLowerCase().includes(CourseName.C.toLowerCase())) {
       img = require("./../../../../assets/c.png");
-    } else if (value.courseName.toLowerCase().includes(CourseName.Java.toLowerCase())) {
+    } else if (
+      value.courseName.toLowerCase().includes(CourseName.Java.toLowerCase())
+    ) {
       img = require("./../../../../assets/java.png");
-    } else if (value.courseName.toLowerCase().includes(CourseName.CCNA.toLowerCase()) {
+    } else if (
+      value.courseName.toLowerCase().includes(CourseName.CCNA.toLowerCase())
+    ) {
       img = require("./../../../../assets/ccna.jpg");
-    } else if (value.courseName.toLowerCase().includes(CourseName.PHP.toLowerCase())) {
+    } else if (
+      value.courseName.toLowerCase().includes(CourseName.PHP.toLowerCase())
+    ) {
       img = require("./../../../../assets/php.png");
     }
     return (
@@ -42,13 +49,14 @@ export class CourseScreen extends Component<Props, State> {
             source={require("./../../../../assets/ACT.jpg")}
           />
         </CardItem>
-        <TouchableOpacity onPress={()=>{
-          this.props.getLessonByCourseId(value);
-        }}>
+        <TouchableOpacity
+          onPress={() => {
+            this.props.getLessonByCourseId(value);
+          }}
+        >
           <CardItem style={styles.cardItemOpacity} />
           <View style={styles.course}>
-            <Image 
-            style={commonStyles.imageNormal} source={img} />
+            <Image style={commonStyles.imageNormal} source={img} />
             <Text>{value.courseName}</Text>
           </View>
         </TouchableOpacity>
@@ -59,7 +67,6 @@ export class CourseScreen extends Component<Props, State> {
     return (
       <Container>
         <HeaderComponent
-          style={}
           navigation={this.props.navigation}
           left={
             <View>
@@ -76,8 +83,19 @@ export class CourseScreen extends Component<Props, State> {
     );
   }
 }
-
-export default CourseScreen;
+function bindAction(dispatch) {
+  return {};
+}
+function mapStateToProps(store) {
+  return {
+    listCourses: store.attendanceReducer.courses,
+    isLoading: store.lessonReducer.isLoading
+  };
+}
+export default connect(
+  mapStateToProps,
+  bindAction
+)(CourseScreen);
 
 const styles = StyleSheet.create({
   card: {

@@ -3,6 +3,7 @@ import { API } from "../../Common/config";
 import { ThunkAction } from "redux-thunk";
 import { fetchLessonByCourseId } from './../../Services/LessonService';
 import { loadingLesson } from "../LessonContainer/action";
+import { NavigationService } from "../../Services/NavigationService";
 export function getListCourse(): ThunkAction {
   const log = getDataCourses(API.getListCourse);
   log.then((result) => {
@@ -25,7 +26,10 @@ export function getLessonByCourseId(id : string) : ThunkAction {
             console.log('result', result);
             dispatch(result[0]);
             if(result) {
-                dispatch(loadingLesson(false));
+                setTimeout(() => {
+                    NavigationService.navigate("Lesson");
+                    dispatch(loadingLesson(false));
+                },0);
             }
         })
     }

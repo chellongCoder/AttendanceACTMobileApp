@@ -51,6 +51,7 @@ class Home extends React.Component<Props, State> {
       }
     }, 300);
     this._toggleModal = this._toggleModal.bind(this);
+    console.log('list', this.props.list);
   }
   componentDidMount() {
     
