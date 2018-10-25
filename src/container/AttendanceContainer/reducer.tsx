@@ -46,7 +46,7 @@ export default function (state:State = initState, action) {
     if (action.type === CONSTANT.SELECTED_COURSE) {
         return {
             ...state,
-            selectedCourse: action.selectedCourse
+            selectedCourse: action.course
         }
     }
     return state;
