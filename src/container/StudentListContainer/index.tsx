@@ -54,7 +54,7 @@ function bindAction(dispatch) {
 }
 function mapStateToProps(store) {
   return {
-      listStudentByCourses: store.courseReducer.studentsByIdCourse
+    listStudentByCourses: store.attendanceReducer.studentsByIdCourse
   };
 }
 export default connect(

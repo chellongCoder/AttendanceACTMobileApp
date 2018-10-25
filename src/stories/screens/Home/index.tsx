@@ -23,7 +23,7 @@ import platform from './../../../theme/variables/platform';
 import CommonColor from './../../../theme/variables/commonColor';
 import Modal from "react-native-modal";
 import commonColor from "./../../../theme/variables/commonColor";
- import ModalContainer from './../../../container/CoursesCotainer';
+ import ModalContainer from './../../../container/AttendanceContainer';
 export interface Props {
   navigation: any;
   list: any;
@@ -51,6 +51,7 @@ class Home extends React.Component<Props, State> {
       }
     }, 300);
     this._toggleModal = this._toggleModal.bind(this);
+    console.log('list', this.props.list);
   }
   componentDidMount() {
     

@@ -1,6 +1,7 @@
 import color from "color";
 
 import { Platform, Dimensions, PixelRatio } from "react-native";
+import { moderateScale } from "react-native-size-matters";
 
 const deviceHeight = Dimensions.get("window").height;
 const deviceWidth = Dimensions.get("window").width;
@@ -8,6 +9,63 @@ const platform = Platform.OS;
 const platformStyle = undefined;
 
 export default {
+	//background
+	tabbarBackground: "#0D6ED1",
+	commonBackground: "#3694EE",
+	buttonBackground: "#FFFFFF",
+	headerBackground: "#FFFFFF",
+	whitebackground: "#FFFFFF",
+	footerBackground: "#FFFFFF",
+	defaultBackground: "#ECECEC",
+	brownBackground: "#CDCED2",
+	disableBackground: "#E8E8E8",
+	//textWhite
+	placeholderText: "#FFFFFF",
+	textDanger: "#d9534f",
+	textButton: "#3694EE",
+	textColorWhite: "#FFFFFF",
+	textNote: "#808080",
+
+	// Card
+	cardDefaultBg: "#fff",
+	// label
+	backgroundLabel: "#E1E1E1",
+	manTelLabel: {
+		width: 144,
+		height: 50
+	},
+	//slider
+	imageSlider: {
+		width: 305,
+		height: 320
+	},
+	//image term
+	imageTermScreen: {
+		width: 248,
+		height: 221
+	},
+	//note :
+	noteBackgroundColor: "#FFF7D5",
+	commonImageStyle: {
+		resizeMode: "contain",
+		width: moderateScale(this.iconSizeNormal),
+		height: moderateScale(this.iconSizeNormal)
+	},
+	messageButton: "#FDC006",
+	// Color
+	brandPrimary: "#2874F0",
+	brandInfo: "#62B1F6",
+	brandSuccess: "#5cb85c",
+	brandDanger: "#d9534f",
+	brandWarning: "#f0ad4e",
+	brandSidebar: "#252932",
+
+	// Font
+	fontFamily: platform === "ios" ? "System" : "Roboto",
+	fontSizeBase: 15,
+	//border
+	noteBorder: "#FFE470",
+
 	platformStyle,
 	platform,
 	// AndroidRipple
@@ -97,27 +155,24 @@ export default {
 
 	buttonPadding: 6,
 
-	get iconSizeLarge() {
+	get iconSizeNormal() {
 		return this.iconFontSize * 1.5;
 	},
-	get iconSizeSmall() {
-		return this.iconFontSize * 0.6;
+	get iconSizeLarge() {
+		return this.iconFontSize * 3;
 	},
-
+	get iconSizeMedium() {
+		return this.iconFontSize * 0.7;
+	},
+	get iconSizeSmall() {
+		return this.iconFontSize * 0.5;
+	},
 	// Card
-	cardDefaultBg: "#fff",
 
 	// Color
-	brandPrimary: "#2874F0",
-	brandInfo: "#62B1F6",
-	brandSuccess: "#5cb85c",
-	brandDanger: "#d9534f",
-	brandWarning: "#f0ad4e",
-	brandSidebar: "#252932",
 
-	// Font
-	fontFamily: platform === "ios" ? "System" : "Roboto",
-	fontSizeBase: 15,
+
+
 
 	get fontSizeH1() {
 		return this.fontSizeBase * 1.8;

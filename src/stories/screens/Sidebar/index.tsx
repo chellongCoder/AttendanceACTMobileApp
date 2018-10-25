@@ -11,7 +11,8 @@ import {
 	GraphRequest,
 	GraphRequestManager
 } from "react-native-fbsdk";
-const routes = [
+import { Router } from "../../../container/SidebarContainer/interface";
+const routes : Array<Router> = [
   {
     route: "Home",
     caption: "Home"
@@ -31,9 +32,10 @@ const routes = [
 ];
 
 export interface Props {
-	navigation: any;
-	user?: Object;
-	resetAccountFB : Function;
+  navigation: any;
+  user?: Object;
+  resetAccountFB: Function;
+  getListCourses : Function;
 }
 export interface State {}
 const resetAction = NavigationActions.reset({
@@ -43,16 +45,35 @@ const resetAction = NavigationActions.reset({
 export default class Sidebar extends React.Component<Props, State> {
 	constructor(props) {
 		super(props);
-		this.LogoutFB = this.LogoutFB.bind(this);
+    this.LogoutFB = this.LogoutFB.bind(this);
+    this.renderRow = this.renderRow.bind(this);
 	}
 	LogoutFB() {
 		LoginManager.logOut();
 		this.props.resetAccountFB();
-		this.props.navigation.dispatch(resetAction);
+    this.props.navigation.dispatch(resetAction);
+    
 		// console.log(this.props.resetAccountFB);
 		
 		// this.props.navigation.navigate("Login");
-	}
+  }
+  /**
+   * TODO: viết function onpress gọi function ứng với các màn hình 
+   */
+  renderRow(data : Router) {
+    return (
+      <ListItem button onPress={()=>{
+        console.log('click');
+        if(data.route==="Courses")  {
+          this.props.getListCourses();
+          this.props.navigation.navigate("Courses");
+        }
+      }}>
+        <Text>{data.caption}</Text>
+      </ListItem>
+    )
+  }
+
 	render() {
 		return <Container>
         <Header style={{ height: 200, backgroundColor: commonColor.brandPrimary, flexDirection: "column", alignItems: "center" }}>
@@ -63,13 +84,7 @@ export default class Sidebar extends React.Component<Props, State> {
           <Text>{this.props.user && this.props.user.email}</Text>
         </Header>
         <Content>
-          <List style={{ marginTop: 40 }} dataArray={routes} renderRow={data => {
-              return <ListItem button onPress={() => {
-                    data.route === "Login" ? this.LogoutFB() : this.props.navigation.navigate(data.route);
-                  }}>
-                  <Text>{data.caption}</Text>
-                </ListItem>;
-            }} />
+          <List style={{ marginTop: 40 }} dataArray={routes} renderRow={this.renderRow} />
           <LoginButton readPermissions={["public_profile"]} onLoginFinished={(error, result) => {
               if (error) {
                 console("login has error: " + result);
