@@ -16,6 +16,7 @@ export interface Props {
   data: Array<Course>;
   getLessonByCourseId: Function;
   isLoading : boolean;
+  getSelectedCourse : Function;
 }
 export interface State {}
 export class CourseScreen extends Component<Props, State> {
@@ -51,6 +52,7 @@ export class CourseScreen extends Component<Props, State> {
         </CardItem>
         <TouchableOpacity
           onPress={() => {
+            this.props.getSelectedCourse(value);
             this.props.getLessonByCourseId(value);
           }}
         >
