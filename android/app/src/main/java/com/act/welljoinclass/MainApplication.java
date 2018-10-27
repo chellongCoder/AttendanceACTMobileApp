@@ -4,6 +4,11 @@ import android.app.Application;
 
 import com.facebook.react.ReactApplication;
 import io.invertase.firebase.RNFirebasePackage;
+import com.facebook.reactnative.androidsdk.FBSDKPackage;
+import com.magus.fblogin.FacebookLoginPackage;
+import io.invertase.firebase.RNFirebasePackage;
+import com.facebook.reactnative.androidsdk.FBSDKPackage;
+import io.invertase.firebase.RNFirebasePackage;
 import io.invertase.firebase.auth.RNFirebaseAuthPackage; // Firebase Auth
 import com.magus.fblogin.FacebookLoginPackage;
 
@@ -38,6 +43,11 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNFirebasePackage(),
+            new FBSDKPackage(),
+            new FacebookLoginPackage(),
+            new RNFirebasePackage(),
+            new FBSDKPackage(),
             new RNFirebasePackage(),
             new RNFirebaseAuthPackage(), // firebase auth package
             new FacebookLoginPackage(),

@@ -32,6 +32,7 @@ import { Lesson } from "../../../container/LessonContainer/interface";
 import { connect } from "react-redux";
 import { moderateScale } from "react-native-size-matters";
 import { Course } from "../../../container/CoursesContainer/interface";
+import { getDate } from "../../../Util/view.util";
 // import Icon from 'react-native-vector-icons';
 
 export interface Props {
@@ -173,24 +174,40 @@ export default class LessonScreen extends Component<Props, State> {
           />
           <View style={styles.content}>
             <View style={styles.row}>
-              <Icon active style={styles.icon} name="logo-tux" />
-              <Title>Course Name: </Title>
-              <Text>{courseSelected.courseName}</Text>
+              <View style={styles.leftRow}>
+                <Icon active style={styles.icon} name="logo-tux" />
+                <Title>Course Name: </Title>
+              </View>
+              <View style={styles.rightRow}>
+                <Text style={commonStyles.textButton}>{courseSelected.courseName}</Text>
+              </View>
             </View>
             <View style={styles.row}>
-              <Icon active style={styles.icon} name="calendar" />
-              <Title>Duration: </Title>
-              <Text>{courseSelected.duration}</Text>
+              <View style={styles.leftRow}>
+                <Icon type="Ionicons" active style={styles.icon} name="time" />
+                <Title>Duration: </Title>
+              </View>
+              <View style={styles.rightRow}>
+                <Text style={commonStyles.textButton}>{courseSelected.duration}</Text>
+              </View>
             </View>
             <View style={styles.row}>
-              <Icon active style={styles.icon} name="logo-tux" />
-              <Title>Start day: </Title>
-              <Text>{courseSelected.initDay}</Text>
+              <View style={styles.leftRow}>
+                <Icon type="Octicons" active style={styles.icon} name="calendar" />
+                <Title>Start day: </Title>
+              </View>
+              <View style={styles.rightRow}>
+                <Text style={commonStyles.textButton}>{`${getDate(courseSelected.initDay)[0]}`}</Text>
+              </View>
             </View>
             <View style={styles.row}>
-              <Icon active style={styles.icon} name="logo-tux" />
-              <Title>End day: </Title>
-              <Text>{courseSelected.endDay}</Text>
+              <View style={styles.leftRow}>
+                <Icon type="Ionicons" active style={styles.icon} name="calendar" />
+                <Title>End day: </Title>
+              </View>
+              <View style={styles.rightRow}>
+                <Text style={commonStyles.textButton}>{`${getDate(courseSelected.endDay)[0]}`}</Text>
+              </View>
             </View>
             
           </View>
@@ -205,12 +222,26 @@ const styles = StyleSheet.create({
     marginTop: moderateScale(20),
     textAlign: "center",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
+    backgroundColor : commonColor.whitebackground
   },
   row: {
     flex: 1,
-    alignItems: "center",
-    flexDirection: "row"
+    justifyContent: "center",
+    flexDirection: "row",
+    marginHorizontal : moderateScale(20),
+    borderBottomWidth : 0.5,
+    borderBottomColor : commonColor.cardBorderColor
+  },
+  leftRow : {
+    flex : 1,
+    flexDirection : 'row',
+    alignItems : 'center',
+    justifyContent : 'flex-start',
+  },
+  rightRow : {
+    flex :1,
+    alignItems : 'flex-end'
   },
   icon: {
     color: commonColor.brandPrimary,

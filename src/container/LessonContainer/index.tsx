@@ -5,11 +5,16 @@ import { Lesson } from './interface';
 import commonColor from '../../theme/variables/commonColor';
 import commonStyles from '../../theme/variables/commonStyles';
 import { Course } from '../CoursesContainer/interface';
+import { getSelectedCourse } from '../CoursesContainer/action';
+import { getSelectedLesson, getStudentInAttendance } from './action';
+import { API } from '../../Common/config';
 
 export interface Props {
     navigation: any;
     listLesson : Array<Lesson>;
     courseSelected : Course;
+    getSelectedLesson : Function;
+    getStudentInAttendance : Function;
 }
 export interface State {
   isVisibleModal: boolean;
@@ -37,6 +42,9 @@ export interface State {
             let element = this.props.listLesson[i];
             if(element.dayLearning.includes(dayString)) {
               console.log(element);
+              this.props.getSelectedLesson(element);
+              this.props.getStudentInAttendance(element.lessonId, API.getStudentInAttendance);
+              return;
             }
           }
     }
@@ -78,13 +86,15 @@ export interface State {
 
 function bindAction(dispatch) {
     return {
-
+      getSelectedLesson : (lesson) => dispatch(getSelectedLesson(lesson)),
+      getStudentInAttendance : (idLesson, url) => dispatch(getStudentInAttendance(idLesson, url)),
     };
 }
 function mapStateToProps(store) {
     return {
         listLesson : store.lessonReducer.listLesson,
         courseSelected : store.attendanceReducer.selectedCourse
+        
     };
 }
 export default connect(

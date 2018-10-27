@@ -6,3 +6,8 @@ export function getRandomColor() {
     }
     return color;
 }
+
+export function getDate(date) {
+    let splits = date.split(/[A-Z+]/);
+    return splits;
+}

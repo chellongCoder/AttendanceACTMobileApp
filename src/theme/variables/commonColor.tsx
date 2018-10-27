@@ -159,7 +159,7 @@ export default {
 		return this.iconFontSize * 1.5;
 	},
 	get iconSizeLarge() {
-		return this.iconFontSize * 3;
+		return this.iconFontSize * 5;
 	},
 	get iconSizeMedium() {
 		return this.iconFontSize * 0.7;
