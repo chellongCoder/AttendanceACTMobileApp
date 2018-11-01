@@ -41,14 +41,15 @@ export interface State {
         console.log(value);
         let item = (element) => {   
             if (element.courseId === value) {
-                console.log('element', element);
+               
                 this.selectedCourse = element;
                 return true;
             }
             return false;
         }  
         let arr = this.props.listCourses.some(item);
-        this.setState({selectedValue : value})
+        this.setState({selectedValue : value});
+        console.log('element', this.selectedCourse);
         this.props.fetchListStudentByCourseId(API.getStudentByCourseId, this.selectedCourse.courseId, this.selectedCourse);
         this.props._toggleModal();
         this.props.navigation.navigate("StudentList");

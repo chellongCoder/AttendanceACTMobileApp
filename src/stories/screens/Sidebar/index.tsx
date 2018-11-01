@@ -2,7 +2,6 @@ import * as React from "react";
 import { Text, Container, List, Header, ListItem, Content, Title } from "native-base";
 import { NavigationActions } from "react-navigation";
 import {Image} from 'react-native';
-import {Object} from './../../../container/SidebarContainer';
 import commonColor from "../../../theme/variables/commonColor";
 import {
 	LoginButton,
@@ -14,7 +13,7 @@ import {
 import { Router } from "../../../container/SidebarContainer/interface";
 const routes : Array<Router> = [
   {
-    route: "Home",
+    route: "FunctionPage",
     caption: "Home"
   },
   {
@@ -22,13 +21,14 @@ const routes : Array<Router> = [
     caption: "Infomation user"
   },
   {
+    route: "Courses",
+    caption: "All Courses"
+  },
+  {
     route: "Login",
     caption: "Logout"
   },
-  {
-    route: "Courses",
-    caption: "All Courses"
-  }
+  
 ];
 
 export interface Props {
@@ -64,9 +64,21 @@ export default class Sidebar extends React.Component<Props, State> {
     return (
       <ListItem button onPress={()=>{
         console.log('click');
-        if(data.route==="Courses")  {
-          this.props.getListCourses();
-          this.props.navigation.navigate("Courses");
+        switch (data.route) {
+          case "Courses":
+            this.props.getListCourses();
+            this.props.navigation.navigate("Courses");
+            break;
+          case "Login":
+            LoginManager.logOut();
+            this.props.resetAccountFB();
+            this.props.navigation.navigate("Login");
+          case "FunctionPage":
+            this.props.navigation.navigate("FunctionPage");
+            break;
+          
+          default:
+            break;
         }
       }}>
         <Text>{data.caption}</Text>
@@ -85,20 +97,7 @@ export default class Sidebar extends React.Component<Props, State> {
         </Header>
         <Content>
           <List style={{ marginTop: 40 }} dataArray={routes} renderRow={this.renderRow} />
-          <LoginButton readPermissions={["public_profile"]} onLoginFinished={(error, result) => {
-              if (error) {
-                console("login has error: " + result);
-              } else if (result.isCancelled) {
-                Alert.alert("login is cancelled.");
-              } else {
-                AccessToken.getCurrentAccessToken().then(data => {
-                  let { accessToken } = data;
-                  console.log("accessToken1", accessToken);
-                  this.initUser(accessToken);
-                  console.log("data", data);
-                });
-              }
-            }} onLogoutFinished={() => console.log("logout.")} />
+          
         </Content>
       </Container>;
 	}

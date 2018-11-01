@@ -44,6 +44,7 @@ export interface State {
               console.log(element);
               this.props.getSelectedLesson(element);
               this.props.getStudentInAttendance(element.lessonId, API.getStudentInAttendance);
+              this.props.navigation.navigate("StudentAttendance");
               return;
             }
           }

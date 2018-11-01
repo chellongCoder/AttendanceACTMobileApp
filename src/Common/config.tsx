@@ -5,6 +5,7 @@
     getUserAdmin: "http://125.212.227.42:48080/api/ext/getAdminUser",
     getLessonByCourseId: "http://125.212.227.42:48080/api/ext/getLessonByCourseid", 
     getStudentInAttendance : "http://125.212.227.42:48080/api/ext/getStudentInAttendance",
+    insertNewLesson: "http://125.212.227.42:48080/api/ext/addNewLesson",
   }
   
   export const environment = {

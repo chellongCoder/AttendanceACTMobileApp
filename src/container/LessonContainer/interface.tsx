@@ -3,4 +3,5 @@ export interface Lesson {
     courseId : string;
     dayLearning : string;
     titleLesson : string;
+    noteLesson : string;
 }

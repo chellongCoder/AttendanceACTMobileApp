@@ -7,7 +7,7 @@ const deviceWidth = Dimensions.get("window").width;
 
 import Login from "./container/LoginContainer";
 import Home from "./container/HomeContainer";
-import BlankPage from "./container/BlankPageContainer";
+import FunctionPage from "./container/FunctionPageContainer";
 import Sidebar from "./container/SidebarContainer";
 import StudentList from "./container/StudentListContainer";
 import CoursesContainer from "./container/CoursesContainer";
@@ -15,8 +15,11 @@ import AttendanceContainer from "./container/AttendanceContainer";
 import LessonContainer from "./container/LessonContainer";
 import { NavigationService } from "./Services/NavigationService";
 import StudentAttendanceContainer from "./container/StudentAttendanceContainer.tsx";
+import SpashScreenContainer from "./container/SplashScreenContainer";
 const Drawer = DrawerNavigator(
   {
+    FunctionPage: { screen: FunctionPage },
+    Courses: { screen: CoursesContainer },
     Home: { screen: Home }
   },
   {
@@ -28,17 +31,23 @@ const Drawer = DrawerNavigator(
 
 const Stack = StackNavigator(
   {
+    SpashScreen : {screen : SpashScreenContainer},
     Login: { screen: Login },
-    BlankPage: { screen: BlankPage },
-    Drawer: { screen: Drawer },
-    StudentList: { screen: StudentList },
+    Home: { screen: Home },
+    FunctionPage: { screen: FunctionPage },
     Courses: { screen: CoursesContainer },
+    Drawer: {
+      screen: Drawer,
+      navigationOptions: { gesturesEnabled: false }
+    },
+    StudentList: { screen: StudentList },
+
     Attendance: { screen: AttendanceContainer },
     Lesson: { screen: LessonContainer },
-    StudentAttendance : {screen : StudentAttendanceContainer}
+    StudentAttendance: { screen: StudentAttendanceContainer }
   },
   {
-    initialRouteName: "StudentAttendance",
+    initialRouteName: "SpashScreen",
     headerMode: "none"
   }
 );

@@ -37,11 +37,11 @@ export function getLessonByCourseId(id : string) : ThunkAction {
     }
 }
 
-export function getSelectedCourse(course : Course) {
+export function getSelectedCourse(selectedCourse : Course) {
     return dispatch => {
         dispatch({
             type : app_constant.SELECTED_COURSE,
-            course
+            selectedCourse
         })
     }
 }
