@@ -84,7 +84,8 @@ componentDidMount() {
   setTimeout(() => {
     console.log("length", Object.keys(this.props.accountFacebook).length);
     if (Object.keys(this.props.accountFacebook).length !== 0) {
-      this.props.navigation.navigate("Home");
+      this.props.navigation.navigate("Drawer");
+      return;
     } 
     if(this.props.accountAdmin.username!=="") {
       this.props.navigation.navigate("Drawer");
@@ -115,11 +116,13 @@ componentDidMount() {
                 const facebookID = json.id;
                 const fbImage = `https://graph.facebook.com/${facebookID}/picture?height=${imageSize}`;
                 this.authenticate(data.accessToken).then(result => {
-                  console.log(result);
+                  console.log('result',result.user);
+                  this.props.saveAccountFB(result);
                   if (Object.keys(this.props.accountFacebook).length===0) {
                     this.props.fetchListStudentByCourseId(API.insertStudent, result);
                   } 
                   if (result) {
+                    
                     this.props.navigation.navigate("Home");
                   }
                   const { uid } = result.user;

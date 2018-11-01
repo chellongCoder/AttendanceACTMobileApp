@@ -4,6 +4,8 @@ import { ThunkAction } from "redux-thunk";
 import { fetchLessonByCourseId } from './../../Services/LessonService';
 import { loadingLesson } from "../LessonContainer/action";
 import { NavigationService } from "../../Services/NavigationService";
+import { Course } from "./interface";
+import app_constant from "../../Common/app_constant";
 export function getListCourse(): ThunkAction {
   const log = getDataCourses(API.getListCourse);
   log.then((result) => {
@@ -35,3 +37,11 @@ export function getLessonByCourseId(id : string) : ThunkAction {
     }
 }
 
+export function getSelectedCourse(selectedCourse : Course) {
+    return dispatch => {
+        dispatch({
+            type : app_constant.SELECTED_COURSE,
+            selectedCourse
+        })
+    }
+}

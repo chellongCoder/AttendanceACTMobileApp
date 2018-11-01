@@ -6,6 +6,8 @@ export interface Props {
   student: Course;
   selectedItem: Function;
   key? : number;
+  left : any;
+  right : any;
 }
 export interface State { 
     selected : boolean;
@@ -31,13 +33,11 @@ export default class ListItemComponent extends Component<Props, State> {
                 selected={this.state.selected}
             >
                <Left>
-                    <Text>{`${this.props.student.firstName} ${this.props.student.lastName}`}</Text>
+                   {this.props.left}
                </Left>
                <Body/>
                <Right>
-                    <Right>
-                    <Icon name="arrow-forward" />
-                </Right>
+                   {this.state.selected ? this.props.right : null}
                </Right>
             </ListItem>
         );

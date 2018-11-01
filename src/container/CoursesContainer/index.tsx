@@ -5,7 +5,7 @@ import { getDataCourses } from "../../Services/CoursesService";
 import { API } from "../../Common/config";
 import { Course } from "./interface";
 import { connect } from "react-redux";
-import { getListCourse, getLessonByCourseId } from "./action";
+import { getListCourse, getLessonByCourseId, getSelectedCourse } from "./action";
 import Spinner from "react-native-loading-spinner-overlay";
 import commonColor from "../../theme/variables/commonColor";
 import { NavigationService } from "../../Services/NavigationService";
@@ -17,6 +17,7 @@ export interface Props {
   getListCourse: Function;
   getLessonByCourseId: Function;
   isLoading: boolean;
+  getSelectedCourse : Function;
 }
 export interface State {
   spinner: boolean;
@@ -50,6 +51,7 @@ export class CoursesContainer extends Component<Props, State> {
     return (
       <View style={{ flex: 1 }}>
         <CourseScreen
+          getSelectedCourse={this.props.getSelectedCourse}
           getLessonByCourseId={this.getLessonByCourseId}
           data={this.props.listCourses}
           navigation={this.props.navigation}
@@ -61,7 +63,7 @@ export class CoursesContainer extends Component<Props, State> {
               animation="fade"
               color={commonColor.brandPrimary}
               overlayColor="rgba(0, 0, 0, 0.6)"
-              textContent={"Loading..."}
+              // textContent={"Loading..."}
               textStyle={commonStyles.textButton}
             />
           ) : null
@@ -74,7 +76,8 @@ export class CoursesContainer extends Component<Props, State> {
 function bindAction(dispatch) {
   return {
     getListCourse: () => dispatch(getListCourse()),
-    getLessonByCourseId: id => dispatch(getLessonByCourseId(id))
+    getLessonByCourseId: id => dispatch(getLessonByCourseId(id)),
+    getSelectedCourse : (course) => dispatch(getSelectedCourse(course))
   };
 }
 function mapStateToProps(store) {

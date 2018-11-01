@@ -2,11 +2,12 @@ import CONSTANT from "./../../Common/app_constant";
 import { Course } from "./../StudentListContainer";
 import { Admin, Response } from "./interface";
 import { ThunkAction } from "redux-thunk";
-export function saveAccountFB(account: Object) {
+export function saveAccountFB(account) {
+  console.log('accout', account);
   return dispatch => {
     dispatch({
-      type: "SAVE_ACCOUNT_FB",
-      accountFacebook: account
+      type: CONSTANT.SAVE_ACCOUNT_FB,
+      account
     });
   };
 }
