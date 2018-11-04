@@ -30,12 +30,14 @@ import InputConponent from "../../../component/InputConponent";
 
 export interface Props {
   navigation: any;
-  listStudentByCourses: Array<{}>;
+  listStudentByCourses: Array<Student>;
   selectedItem: Function;
+  unSelectedItem: Function;
   submitStudentInClass: Function;
   onChangeLessonTitle: Function;
   onChangeNote: Function;
   onSubmit: Function;
+  insertMessage: string;
 }
 export interface State {
   isPopup: boolean;
@@ -53,12 +55,13 @@ export default class StudentListScreen extends Component<Props, State> {
   componentDidMount = () => {
     if (!this.state.isPopup) {
       setTimeout(() => {
-        this.setState({ isPopup: true });
+        this.setState({ isPopup: this.props.insertMessage !== "success" });
       }, 500);
     }
   };
 
   renderItemStudent(value: Student, index) {
+    console.log("id", index);
     return (
       <ListItemComponent
         left={
@@ -80,8 +83,9 @@ export default class StudentListScreen extends Component<Props, State> {
             />
           </View>
         }
-        key={index}
+        index={index}
         selectedItem={this.props.selectedItem}
+        unSelectedItem={this.props.unSelectedItem}
         student={value}
         navigation={this.props.navigation}
       />
@@ -89,6 +93,7 @@ export default class StudentListScreen extends Component<Props, State> {
   }
 
   render() {
+    console.log("render");
     return (
       <Container>
         <Header style={styles.header}>
@@ -106,7 +111,7 @@ export default class StudentListScreen extends Component<Props, State> {
           </List>
         </Content>
         <Modal
-          isVisible={this.state.isPopup}
+          isVisible={this.props.insertMessage !== "success"}
           supportedOrientations={["portrait", "landscape"]}
           style={{ borderRadius: 10 }}
         >
@@ -115,11 +120,14 @@ export default class StudentListScreen extends Component<Props, State> {
               <Text style={commonStyles.textButton}>What's New Lesson?</Text>
             </CardItem>
             <CardItem>
-              <InputConponent onChangeText={this.props.onChangeLessonTitle} />
+              <InputConponent
+                label="Lesson title"
+                onChangeText={this.props.onChangeLessonTitle}
+              />
             </CardItem>
             <Form style={styles.textArea}>
               <Textarea
-                onChangeText={this.props.onChangeNote}
+                onChangeText={text => this.props.onChangeNote(text)}
                 rowSpan={5}
                 bordered
                 placeholder="Textarea"
@@ -171,6 +179,7 @@ export default class StudentListScreen extends Component<Props, State> {
         <FooterComponent
           left={
             <Button
+              onPress={() => this.props.submitStudentInClass()}
               block
               style={{ height: moderateScale(40), marginRight: 10 }}
             >
@@ -220,7 +229,7 @@ const styles = StyleSheet.create({
   },
   modalLesson: {
     backgroundColor: commonColor.whitebackground,
-    height: commonColor.deviceHeight / 2,
+    height: moderateScale(350),
     borderRadius: 10
   },
   textArea: {

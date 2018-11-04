@@ -42,7 +42,8 @@ export interface Props {
   listLesson: Array<Lesson>;
   markDates: Object;
   onSelectDay: Function;
-  courseSelected : Course;
+  getAllStudent: Function;
+  courseSelected: Course;
 }
 export interface State {
   chosenDate: Date;
@@ -104,7 +105,7 @@ export default class LessonScreen extends Component<Props, State> {
   }
 
   render() {
-    let courseSelected : Course =  this.props.courseSelected;
+    let courseSelected: Course = this.props.courseSelected;
     return (
       <Container>
         <HeaderComponent
@@ -113,6 +114,16 @@ export default class LessonScreen extends Component<Props, State> {
             <View>
               <Text style={{ color: commonColor.brandInfo }}>Lesson</Text>
             </View>
+          }
+          right={
+            <TouchableOpacity onPress={() => this.props.getAllStudent()}>
+              <Icon
+                color={commonColor.brandInfo}
+                style={styles.iconStudent}
+                android="md-contact"
+                ios="ios-contact-outline"
+              />
+            </TouchableOpacity>
           }
         />
         <Content>
@@ -169,7 +180,6 @@ export default class LessonScreen extends Component<Props, State> {
             // Handler which gets executed when press arrow icon left. It receive a callback can go next month
             onPressArrowRight={addMonth => addMonth()}
             markedDates={this.props.markDates}
-            
             markingType={"custom"}
           />
           <View style={styles.content}>
@@ -179,7 +189,9 @@ export default class LessonScreen extends Component<Props, State> {
                 <Title>Course Name: </Title>
               </View>
               <View style={styles.rightRow}>
-                <Text style={commonStyles.textButton}>{courseSelected.courseName}</Text>
+                <Text style={commonStyles.textButton}>
+                  {courseSelected.courseName}
+                </Text>
               </View>
             </View>
             <View style={styles.row}>
@@ -188,28 +200,43 @@ export default class LessonScreen extends Component<Props, State> {
                 <Title>Duration: </Title>
               </View>
               <View style={styles.rightRow}>
-                <Text style={commonStyles.textButton}>{courseSelected.duration}</Text>
+                <Text style={commonStyles.textButton}>
+                  {courseSelected.duration}
+                </Text>
               </View>
             </View>
             <View style={styles.row}>
               <View style={styles.leftRow}>
-                <Icon type="Octicons" active style={styles.icon} name="calendar" />
+                <Icon
+                  type="Octicons"
+                  active
+                  style={styles.icon}
+                  name="calendar"
+                />
                 <Title>Start day: </Title>
               </View>
               <View style={styles.rightRow}>
-                <Text style={commonStyles.textButton}>{`${getDate(courseSelected.initDay)[0]}`}</Text>
+                <Text style={commonStyles.textButton}>{`${
+                  getDate(courseSelected.initDay)[0]
+                }`}</Text>
               </View>
             </View>
             <View style={styles.row}>
               <View style={styles.leftRow}>
-                <Icon type="Ionicons" active style={styles.icon} name="calendar" />
+                <Icon
+                  type="Ionicons"
+                  active
+                  style={styles.icon}
+                  name="calendar"
+                />
                 <Title>End day: </Title>
               </View>
               <View style={styles.rightRow}>
-                <Text style={commonStyles.textButton}>{`${getDate(courseSelected.endDay)[0]}`}</Text>
+                <Text style={commonStyles.textButton}>{`${
+                  getDate(courseSelected.endDay)[0]
+                }`}</Text>
               </View>
             </View>
-            
           </View>
         </Content>
       </Container>
@@ -223,28 +250,33 @@ const styles = StyleSheet.create({
     textAlign: "center",
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor : commonColor.whitebackground
+    backgroundColor: commonColor.whitebackground
   },
   row: {
     flex: 1,
     justifyContent: "center",
     flexDirection: "row",
-    marginHorizontal : moderateScale(20),
-    borderBottomWidth : 0.5,
-    borderBottomColor : commonColor.cardBorderColor
+    marginHorizontal: moderateScale(20),
+    borderBottomWidth: 0.5,
+    borderBottomColor: commonColor.cardBorderColor
   },
-  leftRow : {
-    flex : 1,
-    flexDirection : 'row',
-    alignItems : 'center',
-    justifyContent : 'flex-start',
+  leftRow: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-start"
   },
-  rightRow : {
-    flex :1,
-    alignItems : 'flex-end'
+  rightRow: {
+    flex: 1,
+    alignItems: "flex-end"
   },
   icon: {
     color: commonColor.brandPrimary,
     marginRight: moderateScale(10)
+  },
+  iconStudent: {
+    color: commonColor.brandInfo,
+    width: moderateScale(commonColor.iconSizeMedium),
+    height: moderateScale(commonColor.iconSizeMedium)
   }
 });

@@ -15,7 +15,8 @@ import AttendanceContainer from "./container/AttendanceContainer";
 import LessonContainer from "./container/LessonContainer";
 import { NavigationService } from "./Services/NavigationService";
 import StudentAttendanceContainer from "./container/StudentAttendanceContainer.tsx";
-import SpashScreenContainer from "./container/SplashScreenContainer";
+import SplashScreenContainer from "./container/SplashScreenContainer";
+import AllStudentInCourseContainer from "./container/AllStudentInCourseContainer";
 const Drawer = DrawerNavigator(
   {
     FunctionPage: { screen: FunctionPage },
@@ -31,7 +32,7 @@ const Drawer = DrawerNavigator(
 
 const Stack = StackNavigator(
   {
-    SpashScreen : {screen : SpashScreenContainer},
+    SplashScreen: { screen: SplashScreenContainer },
     Login: { screen: Login },
     Home: { screen: Home },
     FunctionPage: { screen: FunctionPage },
@@ -44,10 +45,11 @@ const Stack = StackNavigator(
 
     Attendance: { screen: AttendanceContainer },
     Lesson: { screen: LessonContainer },
-    StudentAttendance: { screen: StudentAttendanceContainer }
+    StudentAttendance: { screen: StudentAttendanceContainer },
+    AllStudentInCourse: { screen: AllStudentInCourseContainer }
   },
   {
-    initialRouteName: "SpashScreen",
+    initialRouteName: "SplashScreen",
     headerMode: "none"
   }
 );
