@@ -58,6 +58,7 @@
 		9C14EEAEBC52BD1D9F0C4AA9 /* libPods-ACTWelljoinedClass.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43798B58960A2555DAE722A8 /* libPods-ACTWelljoinedClass.a */; };
 		A80C115D218B742800EF47F6 /* libRCTFBSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A8E125CC215E11D10084DB32 /* libRCTFBSDK.a */; };
 		A80C115E218B742D00EF47F6 /* libRNFirebase.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A8E12561215E0AD10084DB32 /* libRNFirebase.a */; };
+		A81DEDBF218F39880043B867 /* splash.png in Resources */ = {isa = PBXBuildFile; fileRef = A81DEDBE218F39880043B867 /* splash.png */; };
 		A8E12566215E0B580084DB32 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A8E12565215E0B580084DB32 /* GoogleService-Info.plist */; };
 		A8E125D1215E14730084DB32 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8E125CD215E14730084DB32 /* FBSDKShareKit.framework */; };
 		A8E125D2215E14730084DB32 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8E125CE215E14730084DB32 /* FBSDKCoreKit.framework */; };
@@ -404,6 +405,7 @@
 		96B3295BADDE438CA426338F /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
 		9735EF7D26BF28FCA166317A /* Pods-ACTWelljoinedClass-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ACTWelljoinedClass-tvOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ACTWelljoinedClass-tvOS/Pods-ACTWelljoinedClass-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
 		A0E04D27A7EDC48C89E562A5 /* libPods-ACTWelljoinedClass-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ACTWelljoinedClass-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A81DEDBE218F39880043B867 /* splash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = splash.png; path = ../assets/splash.png; sourceTree = "<group>"; };
 		A8E12565215E0B580084DB32 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A8E125CD215E14730084DB32 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKShareKit.framework; path = RCTFBSDK/FBSDKShareKit.framework; sourceTree = "<group>"; };
 		A8E125CE215E14730084DB32 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = RCTFBSDK/FBSDKCoreKit.framework; sourceTree = "<group>"; };
@@ -659,6 +661,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				A81DEDBE218F39880043B867 /* splash.png */,
 				13B07FAE1A68108700A75B9A /* ACTWelljoinedClass */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* ACTWelljoinedClassTests */,
@@ -1279,6 +1282,7 @@
 				BF7D4B9726214FAE817B7AF8 /* MaterialIcons.ttf in Resources */,
 				760137F4AC734F908ED4B9CD /* Octicons.ttf in Resources */,
 				2A44BF933C184F1B9486F642 /* SimpleLineIcons.ttf in Resources */,
+				A81DEDBF218F39880043B867 /* splash.png in Resources */,
 				3ADA398350474767A9C33881 /* Zocial.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

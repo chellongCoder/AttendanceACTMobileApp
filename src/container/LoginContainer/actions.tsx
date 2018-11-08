@@ -1,9 +1,13 @@
 import CONSTANT from "./../../Common/app_constant";
 import { Course } from "./../StudentListContainer";
-import { Admin, Response } from "./interface";
+import { Admin, Response, Staff } from "./interface";
 import { ThunkAction } from "redux-thunk";
+import app_constant from "./../../Common/app_constant";
+import LoginService from "../../Services/LoginService";
+import { Toast } from "native-base";
+import { NavigationService } from "../../Services/NavigationService";
 export function saveAccountFB(account) {
-  console.log('accout', account);
+  console.log("accout", account);
   return dispatch => {
     dispatch({
       type: CONSTANT.SAVE_ACCOUNT_FB,
@@ -34,6 +38,17 @@ export async function insertStudent(url: string, student: Course): Promise {
   //     data
   // }
 }
+export function insertNewStaff(url: string, staff: Staff) {
+  return dispatch => {
+    const log = LoginService.insertNewStaff(url, staff)
+      .then(result => {
+        console.log("result", result);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  };
+}
 export function fetchListStudentByCourseId(url, account): ThunkAction {
   console.log("url", url, "student", account);
   const log = insertStudent(url, account);
@@ -63,7 +78,9 @@ async function fetchAccountAdmin(account: Admin, url: string) {
   const data: Response = await response.json();
   console.log("data", data);
   let action = {};
-  if (data.message.toLowerCase() === CONSTANT.LOGIN.MESSAGE_SUSCESS.toLowerCase()) {
+  if (
+    data.message.toLowerCase() === CONSTANT.LOGIN.MESSAGE_SUSCESS.toLowerCase()
+  ) {
     action = {
       type: CONSTANT.LOGIN.GET_ACCOUT_ADMIN_SUSCESS,
       data: data.data[0]
@@ -73,7 +90,7 @@ async function fetchAccountAdmin(account: Admin, url: string) {
       type: CONSTANT.LOGIN.GET_ACCOUT_ADMIN_FAILURE
     };
   }
-  return Promise.all([Promise.resolve(action)]);
+  return Promise.resolve(action);
   // return action;
   // }
 }
@@ -81,11 +98,23 @@ async function fetchAccountAdmin(account: Admin, url: string) {
 export function getAccountAdmin(account: Admin, url: string): ThunkAction {
   const log = fetchAccountAdmin(account, url);
   return dispatch => {
-    log.then(result => {
-      dispatch(result[0]);
-    }).catch((error)=>{
-      console.log('error ',error);
-    });
-    return log;
+    log
+      .then(result => {
+        console.log("result", result);
+
+        if (result.type === app_constant.LOGIN.GET_ACCOUT_ADMIN_SUSCESS) {
+          dispatch(result);
+        } else {
+          Toast.show({
+            text: "Enter Valid Username & password!",
+            duration: 2000,
+            position: "top",
+            textStyle: { textAlign: "center" }
+          });
+        }
+      })
+      .catch(error => {
+        console.log("error ", error);
+      });
   };
 }

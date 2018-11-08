@@ -10,7 +10,8 @@ export const API = {
   insertNewLesson: "http://125.212.227.42:48080/api/ext/addNewLesson",
   insertStudentAttendance:
     "http://125.212.227.42:48080/api/ext/insertStudentAttendance",
-  insertNewStudent: "http://125.212.227.42:48080/api/ext/addNewStudent"
+  insertNewStudent: "http://125.212.227.42:48080/api/ext/addNewStudent",
+  insertNewStaff: "http://125.212.227.42:48080/api/ext/addNewStaff"
 };
 
 export const environment = {

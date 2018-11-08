@@ -152,14 +152,29 @@ class AllStudent extends React.Component<AllStudentProps, AllStudentState> {
             </TouchableOpacity>
           }
         />
-        <Content>
-          <List style={styles.list}>
-            {this.props.listStudentInCourse &&
-              this.props.listStudentInCourse.map((value, index) => {
-                return this.renderStudentCard(value, index);
-              })}
-          </List>
-        </Content>
+        {this.props.listStudentInCourse.length !== 0 ? (
+          <Content>
+            <List style={styles.list}>
+              {this.props.listStudentInCourse &&
+                this.props.listStudentInCourse.map((value, index) => {
+                  return this.renderStudentCard(value, index);
+                })}
+            </List>
+          </Content>
+        ) : (
+          <View style={styles.empty}>
+            <Icon
+              name="md-alert"
+              style={{
+                fontSize: moderateScale(commonColor.fontSizeH2),
+                color: commonColor.brandWarning
+              }}
+            />
+            <Text style={commonStyles.textNote}>
+              List student in this course is empty
+            </Text>
+          </View>
+        )}
         <Modal
           isVisible={this.state.isPopup}
           supportedOrientations={["portrait", "landscape"]}
@@ -169,9 +184,11 @@ class AllStudent extends React.Component<AllStudentProps, AllStudentState> {
             <CardItem bordered>
               <Text style={commonStyles.textButton}>Insert New Student</Text>
             </CardItem>
-            {this.props.fieldOfStudent.map((value, index) => {
-              return this.renderField(value, index);
-            })}
+            <Content>
+              {this.props.fieldOfStudent.map((value, index) => {
+                return this.renderField(value, index);
+              })}
+            </Content>
 
             <FooterComponent
               style={{ backgroundColor: "transparent" }}
@@ -289,6 +306,11 @@ const styles = StyleSheet.create({
   },
   textArea: {
     marginHorizontal: moderateScale(10)
+  },
+  empty: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center"
   }
 });
 

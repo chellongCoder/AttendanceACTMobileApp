@@ -6,7 +6,11 @@ import commonColor from "../../theme/variables/commonColor";
 import commonStyles from "../../theme/variables/commonStyles";
 import { Course } from "../CoursesContainer/interface";
 import { getSelectedCourse } from "../CoursesContainer/action";
-import { getSelectedLesson, getStudentInAttendance } from "./action";
+import {
+  getSelectedLesson,
+  getStudentInAttendance,
+  fetchListStudentByCourseId
+} from "./action";
 import { API } from "../../Common/config";
 import { NavigationService } from "../../Services/NavigationService";
 
@@ -16,6 +20,7 @@ export interface Props {
   courseSelected: Course;
   getSelectedLesson: Function;
   getStudentInAttendance: Function;
+  fetchListStudentByCourseId: Function;
 }
 export interface State {
   isVisibleModal: boolean;
@@ -55,7 +60,11 @@ class LessonContainer extends Component<Props, State> {
     }
   }
   getAllStudent() {
-    NavigationService.navigate("AllStudentInCourse");
+    this.props.fetchListStudentByCourseId(
+      API.getStudentByCourseId,
+      this.props.courseSelected.courseId
+    );
+    // NavigationService.navigate("AllStudentInCourse");
   }
   render() {
     if (this.props.listLesson.length > 0) {
@@ -99,7 +108,9 @@ function bindAction(dispatch) {
   return {
     getSelectedLesson: lesson => dispatch(getSelectedLesson(lesson)),
     getStudentInAttendance: (idLesson, url) =>
-      dispatch(getStudentInAttendance(idLesson, url))
+      dispatch(getStudentInAttendance(idLesson, url)),
+    fetchListStudentByCourseId: (url, courseId) =>
+      dispatch(fetchListStudentByCourseId(url, courseId))
   };
 }
 function mapStateToProps(store) {

@@ -140,8 +140,8 @@ const styles = StyleSheet.create({
   },
   card: {
     backgroundColor: commonColor.brandPrimary,
-    width: commonColor.deviceWidth / 2 - 50,
-    height: commonColor.deviceWidth / 2 - 50,
+    width: moderateScale(120),
+    height: moderateScale(120),
     margin: moderateScale(10),
     padding: 0,
     shadowColor: "#000",
@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   text: {
-    fontSize: commonColor.fontSizeH2,
+    fontSize: commonColor.fontSizeH4,
     fontWeight: "200",
     color: commonColor.textColorWhite
   }
