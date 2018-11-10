@@ -62,8 +62,6 @@ export default class Sidebar extends React.Component<Props, State> {
     this.props.resetAccountFB();
 
     // this.props.navigation.dispatch(resetAction);
-
-    this.props.navigation.navigate("Login");
   }
   /**
    * TODO: viết function onpress gọi function ứng với các màn hình
@@ -113,7 +111,9 @@ export default class Sidebar extends React.Component<Props, State> {
           {this.props.user ? (
             <Image
               style={{ borderRadius: 50, width: 100, height: 100 }}
-              source={{ uri: this.props.user.photoURL }}
+              source={{
+                uri: this.props.user.photoURL || this.props.user.avatarUrl
+              }}
             />
           ) : (
             <Image

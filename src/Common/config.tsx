@@ -11,7 +11,8 @@ export const API = {
   insertStudentAttendance:
     "http://125.212.227.42:48080/api/ext/insertStudentAttendance",
   insertNewStudent: "http://125.212.227.42:48080/api/ext/addNewStudent",
-  insertNewStaff: "http://125.212.227.42:48080/api/ext/addNewStaff"
+  insertNewStaff: "http://125.212.227.42:48080/api/ext/addNewStaff",
+  getAccountStaff: "http://125.212.227.42:48080/api/ext/getAccountStaff"
 };
 
 export const environment = {

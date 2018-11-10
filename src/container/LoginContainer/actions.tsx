@@ -6,6 +6,7 @@ import app_constant from "./../../Common/app_constant";
 import LoginService from "../../Services/LoginService";
 import { Toast } from "native-base";
 import { NavigationService } from "../../Services/NavigationService";
+import { API } from "../../Common/config";
 export function saveAccountFB(account) {
   console.log("accout", account);
   return dispatch => {
@@ -94,6 +95,26 @@ async function fetchAccountAdmin(account: Admin, url: string) {
   // return action;
   // }
 }
+async function fetchAccountStaff(staff: Admin, url: string) {
+  const response = await fetch(url, {
+    body: JSON.stringify(staff),
+    headers: {
+      Accept: "application/json",
+      "cache-control": "no-cache",
+      "Content-type": "application/json"
+    },
+    method: "POST"
+  }).catch(error => {
+    console.log(error);
+  });
+  const data: Response = await response.json();
+  console.log("data", data);
+  let action = {
+    type: app_constant.LOGIN.GET_ACCOUNT_STAFF,
+    data: data.data[0]
+  };
+  return Promise.resolve(action);
+}
 
 export function getAccountAdmin(account: Admin, url: string): ThunkAction {
   const log = fetchAccountAdmin(account, url);
@@ -105,12 +126,24 @@ export function getAccountAdmin(account: Admin, url: string): ThunkAction {
         if (result.type === app_constant.LOGIN.GET_ACCOUT_ADMIN_SUSCESS) {
           dispatch(result);
         } else {
-          Toast.show({
-            text: "Enter Valid Username & password!",
-            duration: 2000,
-            position: "top",
-            textStyle: { textAlign: "center" }
-          });
+          const log = fetchAccountStaff(account, API.getAccountStaff);
+          log
+            .then(result => {
+              console.log("result", result);
+              if (result.data) {
+                dispatch(result);
+              } else {
+                Toast.show({
+                  text: "Enter Valid Username & password!",
+                  duration: 2000,
+                  position: "top",
+                  textStyle: { textAlign: "center" }
+                });
+              }
+            })
+            .catch(e => {
+              console.log(e);
+            });
         }
       })
       .catch(error => {

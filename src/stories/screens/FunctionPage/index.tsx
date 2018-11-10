@@ -23,7 +23,7 @@ export interface Props {
   navigation: any;
 }
 export interface State {}
-class BlankPage extends React.Component<Props, State> {
+class FunctionPage extends React.Component<Props, State> {
   items: Array<{}>;
   constructor(props) {
     super(props);
@@ -66,6 +66,7 @@ class BlankPage extends React.Component<Props, State> {
     console.log(value);
     return (
       <TouchableOpacity
+        key={index}
         onPress={() => {
           switch (value.title) {
             case "All Courses":
@@ -127,7 +128,7 @@ class BlankPage extends React.Component<Props, State> {
   }
 }
 
-export default BlankPage;
+export default FunctionPage;
 const styles = StyleSheet.create({
   header: {
     backgroundColor: commonColor.brandPrimary

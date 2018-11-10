@@ -1,5 +1,6 @@
 import CONSTANT from "../../Common/app_constant";
 import { Admin } from "./interface";
+import app_constant from "../../Common/app_constant";
 
 export type State = {
   account: Object;
@@ -48,6 +49,15 @@ export default function(state: State = initialState, action) {
         username: "",
         password: ""
       }
+    };
+  }
+  if (action.type === app_constant.LOGIN.GET_ACCOUNT_STAFF) {
+    let accountFacebook = {};
+    accountFacebook["user"] = action.data;
+    return {
+      ...state,
+      isLogin: true,
+      accountFacebook: accountFacebook
     };
   }
   if (action.type === CONSTANT.LOGIN.GET_ACCOUT_ADMIN_SUSCESS) {
