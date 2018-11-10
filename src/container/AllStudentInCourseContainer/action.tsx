@@ -1,6 +1,7 @@
 import { Student } from "../StudentAttendanceContainer.tsx/interface";
 import { postNewStudent } from "../../Services/ListStudentServices";
 import { Toast } from "native-base";
+import app_constant from "../../Common/app_constant";
 
 export function addNewStudent(student: Student, url: string) {
   console.log("student", student);
@@ -11,6 +12,10 @@ export function addNewStudent(student: Student, url: string) {
           dispatch({
             ...result,
             student: student
+          });
+          dispatch({
+            type: app_constant.ATTENDANCE.INSERT_NEW_STUDENT,
+            data: student
           });
           Toast.show({
             type: "success",

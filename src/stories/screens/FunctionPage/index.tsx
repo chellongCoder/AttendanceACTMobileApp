@@ -23,7 +23,7 @@ export interface Props {
   navigation: any;
 }
 export interface State {}
-class BlankPage extends React.Component<Props, State> {
+class FunctionPage extends React.Component<Props, State> {
   items: Array<{}>;
   constructor(props) {
     super(props);
@@ -66,6 +66,7 @@ class BlankPage extends React.Component<Props, State> {
     console.log(value);
     return (
       <TouchableOpacity
+        key={index}
         onPress={() => {
           switch (value.title) {
             case "All Courses":
@@ -127,7 +128,7 @@ class BlankPage extends React.Component<Props, State> {
   }
 }
 
-export default BlankPage;
+export default FunctionPage;
 const styles = StyleSheet.create({
   header: {
     backgroundColor: commonColor.brandPrimary
@@ -140,8 +141,8 @@ const styles = StyleSheet.create({
   },
   card: {
     backgroundColor: commonColor.brandPrimary,
-    width: commonColor.deviceWidth / 2 - 50,
-    height: commonColor.deviceWidth / 2 - 50,
+    width: moderateScale(120),
+    height: moderateScale(120),
     margin: moderateScale(10),
     padding: 0,
     shadowColor: "#000",
@@ -167,7 +168,7 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   text: {
-    fontSize: commonColor.fontSizeH2,
+    fontSize: commonColor.fontSizeH4,
     fontWeight: "200",
     color: commonColor.textColorWhite
   }

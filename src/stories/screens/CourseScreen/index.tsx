@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Text, View, StyleSheet, Image, TouchableOpacity } from "react-native";
-import { Container, Card, CardItem, Content } from "native-base";
+import { Container, Card, CardItem, Content, Icon } from "native-base";
 
 import { moderateScale } from "react-native-size-matters";
 import commonColor from "../../../theme/variables/commonColor";
@@ -10,13 +10,17 @@ import HeaderComponent from "../../../component/HeaderComponent";
 import { CourseName } from "../../../Common/config";
 import commonStyles from "../../../theme/variables/commonStyles";
 import { connect } from "react-redux";
-import Spinner from 'react-native-loading-spinner-overlay';
+import Spinner from "react-native-loading-spinner-overlay";
+import { NavigationService } from "../../../Services/NavigationService";
+import ModalComponent from "../../../component/ModalComponent";
+import InputConponent from "../../../component/InputConponent";
+import DatePickerComponent from "../../../component/DatePickerComponent";
 export interface Props {
   navigation: any;
   data: Array<Course>;
   getLessonByCourseId: Function;
-  isLoading : boolean;
-  getSelectedCourse : Function;
+  isLoading: boolean;
+  getSelectedCourse: Function;
 }
 export interface State {}
 export class CourseScreen extends Component<Props, State> {
@@ -43,7 +47,7 @@ export class CourseScreen extends Component<Props, State> {
       img = require("./../../../../assets/php.png");
     }
     return (
-      <Card style={styles.card}>
+      <Card key={index} style={styles.card}>
         <CardItem style={styles.cardItem}>
           <Image
             style={styles.image}
@@ -71,9 +75,31 @@ export class CourseScreen extends Component<Props, State> {
         <HeaderComponent
           navigation={this.props.navigation}
           left={
-            <View>
-              <Text>Course</Text>
-            </View>
+            <TouchableOpacity
+              onPress={() => {
+                NavigationService.goBack();
+              }}
+              style={{ flexDirection: "row", alignItems: "center" }}
+            >
+              <Icon
+                style={[
+                  commonStyles.textButton,
+                  { marginRight: moderateScale(5) }
+                ]}
+                android="md-arrow-dropleft"
+                ios="ios-arrow-back-outline"
+              />
+              <Text style={commonStyles.textButton}>Course</Text>
+            </TouchableOpacity>
+          }
+          right={
+            <TouchableOpacity>
+              <Icon
+                style={styles.iconAdd}
+                android="md-add"
+                ios="ios-add-outline"
+              />
+            </TouchableOpacity>
           }
         />
         <Content>
@@ -81,6 +107,34 @@ export class CourseScreen extends Component<Props, State> {
             return this.renderCard(value, index);
           })}
         </Content>
+        <ModalComponent
+          isVisible={true}
+          component={
+            <View style={styles.modal}>
+              <InputConponent onChangeText={() => {}} label="Course Name" />
+              <DatePickerComponent
+                placeholder="Initiated day"
+                onDateChange={date => console.log(date)}
+              />
+              <DatePickerComponent
+                placeholder="Ended day"
+                onDateChange={date => console.log(date)}
+              />
+              <DatePickerComponent
+                placeholder="Ended day"
+                onDateChange={date => console.log(date)}
+              />
+              <DatePickerComponent
+                placeholder="Ended day"
+                onDateChange={date => console.log(date)}
+              />
+              <DatePickerComponent
+                placeholder="Ended day"
+                onDateChange={date => console.log(date)}
+              />
+            </View>
+          }
+        />
       </Container>
     );
   }
@@ -140,5 +194,16 @@ const styles = StyleSheet.create({
   image: {
     width: moderateScale(commonColor.deviceWidth - 10),
     height: moderateScale(commonColor.deviceHeight / 5)
+  },
+  iconAdd: {
+    fontSize: moderateScale(commonColor.fontSizeH3),
+    color: commonColor.commonBackground
+  },
+  modal: {
+    backgroundColor: commonColor.whitebackground,
+    alignItems: "flex-start",
+    height: commonColor.deviceHeight / 2,
+    paddingHorizontal: moderateScale(10),
+    borderRadius: moderateScale(5)
   }
 });

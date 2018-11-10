@@ -6,6 +6,7 @@ import { API } from "../../Common/config";
 import { addNewStudent } from "./action";
 import { randomString } from "../../Util/view.util";
 import { Course } from "../CoursesContainer/interface";
+import { View, Text } from "native-base";
 
 export interface StudentListContainerProps {
   navigation: any;
@@ -78,7 +79,9 @@ class StudentListContainer extends React.Component<
   onChangeFirstName(firstName) {
     this.student.firstName = firstName;
     console.log("error", this.error.firstNameError);
-    let result = /^[a-zA-Z]+$/.test(firstName);
+    let result = /[^0-9a-zａ-ｚ\u4e00-\u9fa5{}\s~`!@#$%^&*()_+=\-\[\];:'"<>,.?\/|\\。·？！、——‘’，；：“”（）《》……]/iu.test(
+      firstName
+    );
     if (result) {
       this.error.firstNameError = "";
       return;
@@ -87,9 +90,12 @@ class StudentListContainer extends React.Component<
   }
   onChangeLastName(lastName) {
     this.student.lastName = lastName;
-    let result = /^[a-zA-Z]+$/.test(lastName);
+    console.log("error", this.error.lastNameError);
+    let result = /[^0-9a-zａ-ｚ\u4e00-\u9fa5{}\s~`!@#$%^&*()_+=\-\[\];:'"<>,.?\/|\\。·？！、——‘’，；：“”（）《》……]/iu.test(
+      lastName
+    );
     if (result) {
-      this.error.firstNameError = "";
+      this.error.lastNameError = "";
       return;
     }
     this.error.lastNameError = "last name is invalid";

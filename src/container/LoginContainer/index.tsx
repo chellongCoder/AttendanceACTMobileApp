@@ -10,7 +10,12 @@ import {
   GraphRequestManager
 } from "react-native-fbsdk";
 import * as firebase from "react-native-firebase";
-import { saveAccountFB, fetchListStudentByCourseId, getAccountAdmin} from "./actions";
+import {
+  saveAccountFB,
+  fetchListStudentByCourseId,
+  getAccountAdmin,
+  insertNewStaff
+} from "./actions";
 import { connect } from "react-redux";
 import { API } from "../../Common/config";
 import styles from "../../stories/screens/Login/styles";
@@ -40,8 +45,9 @@ export interface Props {
   saveAccountFB: Function;
   fetchListStudentByCourseId: Function;
   accountFacebook: Object;
-  getAccountAdmin : Function;
-  accountAdmin : Admin;
+  getAccountAdmin: Function;
+  insertNewStaff: Function;
+  accountAdmin: Admin;
 }
 export interface State {
   username: string;
@@ -49,14 +55,14 @@ export interface State {
 }
 class LoginForm extends React.Component<Props, State> {
   textInput: any;
-  username : string;
-  password : string;
+  username: string;
+  password: string;
   constructor(props) {
     super(props);
     this.username = "";
     this.password = "";
-	this.handleFbLogin = this.handleFbLogin.bind(this);
-	  this.renderInput = this.renderInput.bind(this);
+    this.handleFbLogin = this.handleFbLogin.bind(this);
+    this.renderInput = this.renderInput.bind(this);
   }
   renderInput({ input, meta: { touched, error } }) {
     return (
@@ -66,12 +72,14 @@ class LoginForm extends React.Component<Props, State> {
           // onChangeText
           onChangeText={text => {
             if (input.name === "email") {
-			        this.username = text;
+              this.username = text;
             } else {
-             this.password = text;
+              this.password = text;
             }
-		  }}
-		  onBlur={()=>{console.log('username', this.username, 'password', this.password)}}
+          }}
+          onBlur={() => {
+            console.log("username", this.username, "password", this.password);
+          }}
           // {...input}
           ref={c => (this.textInput = c)}
           placeholder={input.name === "email" ? "Email" : "Password"}
@@ -80,18 +88,7 @@ class LoginForm extends React.Component<Props, State> {
       </Item>
     );
   }
-componentDidMount() {
-  setTimeout(() => {
-    console.log("length", Object.keys(this.props.accountFacebook).length);
-    if (Object.keys(this.props.accountFacebook).length !== 0) {
-      this.props.navigation.navigate("Drawer");
-      return;
-    } 
-    if(this.props.accountAdmin.username!=="") {
-      this.props.navigation.navigate("Drawer");
-    }
-  }, 100);
-}
+
   handleFbLogin() {
     console.log("login");
     LoginManager.logInWithReadPermissions(["public_profile", "email"]).then(
@@ -116,15 +113,9 @@ componentDidMount() {
                 const facebookID = json.id;
                 const fbImage = `https://graph.facebook.com/${facebookID}/picture?height=${imageSize}`;
                 this.authenticate(data.accessToken).then(result => {
-                  console.log('result',result.user);
+                  console.log("result", result.user);
                   this.props.saveAccountFB(result);
-                  if (Object.keys(this.props.accountFacebook).length===0) {
-                    this.props.fetchListStudentByCourseId(API.insertStudent, result);
-                  } 
-                  if (result) {
-                    
-                    this.props.navigation.navigate("Home");
-                  }
+                  this.props.insertNewStaff(API.insertNewStaff, result);
                   const { uid } = result.user;
                   console.log("uid", uid);
                   //   self.createUser(uid, json, token, fbImage);
@@ -149,25 +140,15 @@ componentDidMount() {
     return ret;
   };
 
-  async login() {
+  login() {
     let account = {
-      username : this.username.toLocaleLowerCase(),
-      password : this.password.toLocaleLowerCase(),
-    }
+      username: this.username.toLocaleLowerCase(),
+      password: this.password.toLocaleLowerCase()
+    };
 
     console.log(account);
-    const result = await this.props.getAccountAdmin(account, API.getUserAdmin);
-    console.log('result', result);
-    if(result[0].type===app_constant.LOGIN.GET_ACCOUT_ADMIN_SUSCESS) {
-      this.props.navigation.navigate("Drawer");
-    } else {
-      Toast.show({
-        text: "Enter Valid Username & password!",
-        duration: 2000,
-        position: "top",
-        textStyle: { textAlign: "center" }
-      });
-    }
+    this.props.getAccountAdmin(account, API.getUserAdmin);
+
     // if (this.props.getAccountAdmin(account, API.getUserAdmin)) {
     //   this.props.navigation.navigate("Drawer");
     // } else {
@@ -209,17 +190,18 @@ componentDidMount() {
 function bindAction(dispatch) {
   return {
     saveAccountFB: account => dispatch(saveAccountFB(account)),
-    fetchListStudentByCourseId: (url, account) => dispatch(fetchListStudentByCourseId(url, account)),
-    getAccountAdmin : (account, url) => dispatch(getAccountAdmin(account,url)),
+    fetchListStudentByCourseId: (url, account) =>
+      dispatch(fetchListStudentByCourseId(url, account)),
+    getAccountAdmin: (account, url) => dispatch(getAccountAdmin(account, url)),
+    insertNewStaff: (url, staff) => dispatch(insertNewStaff(url, staff))
   };
 }
 function mapStateToProps(store) {
   return {
-    accountFacebook : store.loginReducer.accountFacebook,
-    accountAdmin : store.loginReducer.accountAdmin,
+    accountFacebook: store.loginReducer.accountFacebook,
+    accountAdmin: store.loginReducer.accountAdmin
   };
 }
-
 
 export default connect(
   mapStateToProps,
@@ -229,4 +211,3 @@ export default connect(
     form: "login"
   })(LoginForm)
 );
-

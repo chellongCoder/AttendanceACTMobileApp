@@ -34,6 +34,7 @@ export default class InputConponent extends Component<Props, States> {
   onBlur() {
     this.setState({ isFocus: false });
   }
+
   render() {
     let error = "";
     switch (this.props.label) {
@@ -45,6 +46,9 @@ export default class InputConponent extends Component<Props, States> {
         break;
       case "Number Phone":
         error = this.props.error.numberPhoneError;
+        break;
+      case "Course Name":
+        error = this.props.error;
         break;
       default:
         break;
@@ -59,6 +63,7 @@ export default class InputConponent extends Component<Props, States> {
       >
         <Label style={commonStyles.buttonText}>{this.props.label}</Label>
         <Input
+          autoFocus={true}
           placeholder={this.props.placeholder}
           placeholderTextColor={commonColor.textNote}
           disabled={this.props.disabled}
