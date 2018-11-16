@@ -1,3 +1,5 @@
+import { Toast } from "native-base";
+
 export function getRandomColor() {
   var letters = "0123456789ABCDEF";
   var color = "#";
@@ -18,4 +20,14 @@ export function randomString(length) {
   )
     .toString(10)
     .slice(1);
+}
+
+
+export function showMessage(text, type, duration) {
+  Toast.show({
+    text : text,
+    type : type,
+    duration : duration,
+    buttonText : "OK"
+  })
 }

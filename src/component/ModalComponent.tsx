@@ -6,12 +6,22 @@ import commonColor from "../theme/variables/commonColor";
 export interface Props {
   isVisible: boolean;
   component: any;
+  onBackdropPress : Function;
 }
-export interface State {}
+export interface State {
+  isVisible : boolean;
+}
 export default class ModalComponent extends Component<Props, State> {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isVisible : false,
+    }
+  }
   render() {
     return (
       <Modal
+        onBackdropPress={() => this.props.onBackdropPress()}
         isVisible={this.props.isVisible}
         backdropColor={"black"}
         backdropOpacity={0.5}

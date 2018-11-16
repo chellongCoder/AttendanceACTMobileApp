@@ -67,6 +67,7 @@
     "react-native-loading-spinner-overlay": "^1.0.1",
     "react-native-material-cards": "^1.0.9",
     "react-native-modal": "^6.5.0",
+    "react-native-panel": "git+http://git.ows.vn:10180/LongNN/react-native-panel.git",
     "react-native-really-awesome-button": "^0.8.3",
     "react-native-size-matters": "^0.1.4",
     "react-navigation": "1.0.0-beta.21",

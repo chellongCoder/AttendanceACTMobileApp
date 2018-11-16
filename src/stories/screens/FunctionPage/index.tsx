@@ -11,13 +11,15 @@ import {
   Right,
   Body,
   Card,
-  List
+  List,
+  Footer
 } from "native-base";
 
-import { StyleSheet, View, TouchableOpacity } from "react-native";
+import { StyleSheet, View, TouchableOpacity, Image } from "react-native";
 import commonColor from "../../../theme/variables/commonColor";
 import { moderateScale } from "react-native-size-matters";
 import commonStyles from "../../../theme/variables/commonStyles";
+import Panel from "react-native-panel";
 
 export interface Props {
   navigation: any;
@@ -91,19 +93,11 @@ class FunctionPage extends React.Component<Props, State> {
   }
   render() {
     const param = this.props.navigation.state.params;
-    return (
-      <Container>
+    return <Container>
         <Header style={styles.header}>
           <Left>
-            <Button
-              transparent
-              onPress={() => this.props.navigation.navigate("DrawerOpen")}
-            >
-              <Icon
-                style={{ color: commonColor.whitebackground }}
-                android="md-menu"
-                ios="ios-menu-outline"
-              />
+            <Button transparent onPress={() => this.props.navigation.navigate("DrawerOpen")}>
+              <Icon style={{ color: commonColor.whitebackground }} android="md-menu" ios="ios-menu-outline" />
             </Button>
           </Left>
 
@@ -123,8 +117,15 @@ class FunctionPage extends React.Component<Props, State> {
             })}
           </List>
         </Content>
-      </Container>
-    );
+        <Footer style={{ backgroundColor: "#FFFFFF" }}>
+          <View style={{ alignItems: "center", opacity: 0.5, flexDirection: "row" }}>
+            <View padder>
+              <Text style={{ color: "#000" }}>Made with love at </Text>
+            </View>
+            <Image source={require("./../../../../assets/ACT.jpg")} style={{ width: 422 / 4, height: 120 / 3 }} />
+          </View>
+        </Footer>
+      </Container>;
   }
 }
 

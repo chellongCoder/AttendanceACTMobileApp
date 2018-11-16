@@ -18,6 +18,14 @@ export function resetAccountAdmin(): ThunkAction {
     });
   };
 }
+export function resetCourses(): ThunkAction {
+  console.log("reset1");
+  return dispatch => {
+    dispatch({
+      type: "RESET_ACCOUNT_ADMIN"
+    });
+  };
+}
 
 export function getListCourse(): ThunkAction {
   const log = getDataCourses(API.getListCourse);

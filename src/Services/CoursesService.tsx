@@ -1,4 +1,5 @@
 import CONSTANT from "../Common/app_constant";
+import { Course } from "../container/CoursesContainer/interface";
 
 export async function getDataCourses(url: string): Promise {
   const response = await fetch(url).catch(error => {
@@ -39,3 +40,30 @@ export async function getStudentByCourseId(
   };
   return Promise.all([Promise.resolve(action)]);
 }
+
+export async function insertNewCourse(course: Course, url: string) {
+  const response = await fetch(url, {
+    body: JSON.stringify(course),
+    headers: {
+      Accept: "application/json",
+      "cache-control": "no-cache",
+      "Content-type": "application/json"
+    },
+    method: "POST"
+  }).catch(error => {
+    console.log(error);
+  });
+  const data = await response.json();
+  console.log("data", data);
+  let action = {
+    type: CONSTANT.COURSE.INSERT_NEW_COURSE,
+    data : course
+  };
+  return Promise.resolve(action);
+}
+const CourseServices = {
+  getDataCourses,
+  getStudentByCourseId,
+  insertNewCourse
+};
+export default CourseServices;
