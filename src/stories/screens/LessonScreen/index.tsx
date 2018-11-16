@@ -131,9 +131,9 @@ export default class LessonScreen extends Component<Props, State> {
             // Initially visible month. Default = Date()
             current={new Date() - 1}
             // Minimum date that can be selected, dates before minDate will be grayed out. Default = undefined
-            minDate={"2012-04-09"}
+            minDate={"2018-01-01"}
             // Maximum date that can be selected, dates after maxDate will be grayed out. Default = undefined
-            maxDate={"2018-12-30"}
+            maxDate={"2020-12-30"}
             // Handler which gets executed on day press. Default = undefined
             onDayPress={day => {
               console.log("selected day", day);
@@ -217,7 +217,7 @@ export default class LessonScreen extends Component<Props, State> {
               </View>
               <View style={styles.rightRow}>
                 <Text style={commonStyles.textButton}>{`${
-                  getDate(courseSelected.initDay)[0]
+                  getDate(courseSelected.initDay.toString().slice(0,10))
                 }`}</Text>
               </View>
             </View>
@@ -233,7 +233,7 @@ export default class LessonScreen extends Component<Props, State> {
               </View>
               <View style={styles.rightRow}>
                 <Text style={commonStyles.textButton}>{`${
-                  getDate(courseSelected.endDay)[0]
+                  getDate(courseSelected.endDay.toString().slice(0, 10))
                 }`}</Text>
               </View>
             </View>

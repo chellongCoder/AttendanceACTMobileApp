@@ -7,6 +7,7 @@ import attendanceReducer from "./../container/AttendanceContainer/reducer";
 import lessonReducer from "./../container/LessonContainer/reducer";
 import studentListReducer from "./../container/StudentListContainer/reducer";
 import studentReducer from "./../container/AllStudentInCourseContainer/reducer";
+import courseReducer from './../container/CoursesContainer/reducer';
 export default combineReducers({
   formReducer,
   homeReducer,
@@ -14,5 +15,6 @@ export default combineReducers({
   attendanceReducer,
   lessonReducer,
   studentListReducer,
-  studentReducer
+  studentReducer,
+  courseReducer
 });

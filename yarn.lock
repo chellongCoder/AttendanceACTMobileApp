@@ -5053,6 +5053,13 @@ react-native-modal@^6.5.0:
     prop-types "^15.6.1"
     react-native-animatable "^1.2.4"
 
+"react-native-panel@git+http://git.ows.vn:10180/LongNN/react-native-panel.git":
+  version "1.0.4"
+  resolved "git+http://git.ows.vn:10180/LongNN/react-native-panel.git#ea2a666dfd526ed44b4b925787a9acc9bb8eadbc"
+  dependencies:
+    prop-types "^15.6.1"
+    react-native-size-matters "^0.1.4"
+
 react-native-really-awesome-button@^0.8.3:
   version "0.8.3"
   resolved "https://registry.yarnpkg.com/react-native-really-awesome-button/-/react-native-really-awesome-button-0.8.3.tgz#81b9f19775d0f094467550ec4584762f1fbdd841"

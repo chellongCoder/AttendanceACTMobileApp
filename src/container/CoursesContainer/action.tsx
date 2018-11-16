@@ -1,11 +1,12 @@
-import { getDataCourses } from "../../Services/CoursesService";
+import CourseServices, { getDataCourses } from "../../Services/CoursesService";
 import { API } from "../../Common/config";
 import { ThunkAction } from "redux-thunk";
 import { fetchLessonByCourseId } from './../../Services/LessonService';
 import { loadingLesson } from "../LessonContainer/action";
 import { NavigationService } from "../../Services/NavigationService";
-import { Course } from "./interface";
+import { Course, Course } from "./interface";
 import app_constant from "../../Common/app_constant";
+import { showMessage } from "../../Util/view.util";
 export function getListCourse(): ThunkAction {
   const log = getDataCourses(API.getListCourse);
   log.then((result) => {
@@ -33,6 +34,19 @@ export function getLessonByCourseId(id : string) : ThunkAction {
                     dispatch(loadingLesson(false));
                 },0);
             }
+        })
+    }
+}
+export function insertNewCourse(course: Course, url : string): ThunkAction {
+    return dispatch => {
+        const log = CourseServices.insertNewCourse(course, url);
+        log.then((result) => {
+            console.log('result', result);
+            dispatch(result);
+            showMessage('Insert sucess', 'success', 2000);
+        })
+        .catch((e) => {
+            showMessage("error", 'danger', 2000);
         })
     }
 }

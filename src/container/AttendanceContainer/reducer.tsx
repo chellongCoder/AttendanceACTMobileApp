@@ -36,6 +36,12 @@ export default function(state: State = initState, action) {
       courses: action.data.data
     };
   }
+  if(action.type === CONSTANT.COURSE.INSERT_NEW_COURSE) {
+    return {
+      ...state,
+      courses : [...state.courses, action.data]
+    }
+  }
   if (action.type === CONSTANT.FETCH_LISTSTUDENT_BY_COURSEID) {
     return {
       ...state,
